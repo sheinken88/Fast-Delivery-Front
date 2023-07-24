@@ -17,12 +17,19 @@
     "noEmit": true,
     "checkJs": false,
     "emitDeclarationOnly": false,
-    "jsx": "react-jsx"
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "plugins": [
     {
       "name": "typescript-plugin-css-modules"
     }
   ],
-  "include": ["src", "*.ts"]
+  "include": ["src", "*.ts", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
