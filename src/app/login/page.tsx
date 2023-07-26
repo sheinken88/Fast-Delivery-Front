@@ -7,7 +7,7 @@ const Login = () => {
   const data = {};
   return (
     <main className="bg-primary p-20 h-screen flex flex-col justify-center items-center">
-      <div className="">
+      <div className="animate-fade-down animate-once animate-ease-linear">
         <Image
           src={Logo}
           alt="Fast Delivery Logo"
