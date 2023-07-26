@@ -18,6 +18,10 @@ module.exports = {
         customGreen: "#C7FFB1",
         customYellow: "#F8E169",
       },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+        poppinsBold: ["Poppins-Black", "sans-serif"],
+      },
     },
   },
   plugins: [],
