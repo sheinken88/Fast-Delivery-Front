@@ -2,6 +2,8 @@
 import NavbarLayout from "app/layoutContainer";
 import PackageCard from "../components/packageInfo";
 import React from "react";
+import LayoutContainer from "app/layoutContainer";
+import { BgLayout } from "app/bgLayout";
 
 interface PackageInfo {
   address: string;
@@ -48,14 +50,14 @@ export default function packages() {
     },
   ];
   return (
-    <div className="bg-white">
-      <NavbarLayout title={"Obtener paquetes"}>
-        <div className="w-full h-full flex flex-col gap-4 p-4 rounded-lg">
+    <BgLayout>
+      <LayoutContainer title={"Obtener paquetes"}>
+        <div className="flex flex-col gap-2 p-2 rounded-lg">
           {packages.map((packageInfo, index) => (
             <PackageCard key={index} packageInfo={packageInfo} />
           ))}
         </div>
-      </NavbarLayout>
-    </div>
+      </LayoutContainer>
+    </BgLayout>
   );
 }

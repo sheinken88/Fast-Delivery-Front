@@ -43,7 +43,7 @@ const PackageCard: React.FC<Props> = ({ packageInfo }) => {
           </div>
         ) : (
           <div
-            className="h-6 w-6 rounded-lg border-2 border-primary bg-customGreen flex items-center justify-center text-xl"
+            className="h-6 w-6 rounded-lg border-2 border-primary bg-customGreen flex items-center justify-center"
             onClick={handleSelect}
           >
             <IconContext.Provider value={{ className: "icon" }}>
@@ -53,8 +53,8 @@ const PackageCard: React.FC<Props> = ({ packageInfo }) => {
         )}
       </div>
 
-      <div className="flex flex-col flex-1 font-poppins">
-        {packageInfo.address}
+      <div className="flex flex-col flex-1 font-poppins text-left text-xs">
+        {packageInfo.address},
         <br />
         {packageInfo.city}
       </div>

@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
+@font-face {
+  font-family: "Poppins";
+  src: url("../../../public/Poppins-Regular.ttf");
+}
+
+:root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -17,6 +22,7 @@
 }
 
 body {
+  font-family: "Poppins";
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -24,4 +30,4 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-} */
+}

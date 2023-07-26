@@ -17,6 +17,10 @@ module.exports = {
         secondary: "#00EA77",
         customGreen: "#C7FFB1",
       },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+        poppinsBold: ["Poppins-Black", "sans-serif"],
+      },
     },
   },
   plugins: [],
