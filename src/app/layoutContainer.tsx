@@ -1,3 +1,4 @@
+"use client";
 import React, { ReactNode } from "react";
 import { IconContext } from "react-icons";
 import { BsArrowLeftCircle } from "react-icons/bs";
