@@ -4,6 +4,7 @@ import PackageCard from "../components/packageInfo";
 import React from "react";
 import LayoutContainer from "app/layoutContainer";
 import { BgLayout } from "app/bgLayout";
+import { Button } from "app/commons/Button";
 
 interface PackageInfo {
   address: string;
@@ -51,17 +52,20 @@ export default function packages() {
   ];
   return (
     <BgLayout>
-      <LayoutContainer title={"Obtener paquetes"}>
-        <div className="border-b-primary border-b border-dotted text-xs text-center font-poppins p-2">
-          ¿Cuántos paquetes repartirás hoy?
-        </div>
-        <br />
-        <div className="flex flex-col gap-2 p-2 rounded-lg">
-          {packages.map((packageInfo, index) => (
-            <PackageCard key={index} packageInfo={packageInfo} />
-          ))}
-        </div>
-      </LayoutContainer>
+      <div className="text-center">
+        <LayoutContainer title={"Obtener paquetes"}>
+          <div className="border-b-primary border-b border-dotted text-xs font-poppins p-2">
+            ¿Cuántos paquetes repartirás hoy?
+          </div>
+          <br />
+          <div className="flex flex-col gap-2 p-2 rounded-lg">
+            {packages.map((packageInfo, index) => (
+              <PackageCard key={index} packageInfo={packageInfo} />
+            ))}
+          </div>
+        </LayoutContainer>
+        <Button customStyle="mt-4 mx-auto block">Iniciar Jornada</Button>
+      </div>
     </BgLayout>
   );
 }
