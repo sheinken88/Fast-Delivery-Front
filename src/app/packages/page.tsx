@@ -52,6 +52,10 @@ export default function packages() {
   return (
     <BgLayout>
       <LayoutContainer title={"Obtener paquetes"}>
+        <div className="border-b-primary border-b border-dotted text-xs text-center font-poppins p-2">
+          ¿Cuántos paquetes repartirás hoy?
+        </div>
+        <br />
         <div className="flex flex-col gap-2 p-2 rounded-lg">
           {packages.map((packageInfo, index) => (
             <PackageCard key={index} packageInfo={packageInfo} />
