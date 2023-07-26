@@ -2,6 +2,7 @@ import React from "react";
 import { Pendientes } from "app/components/pendientes";
 import { Historial } from "app/components/historial";
 import { BgLayout } from "app/bgLayout";
+import Link from "next/link";
 
 export type Package = {
   id: string;
@@ -81,9 +82,14 @@ const Jornada: React.FC = () => {
 
   return (
     <BgLayout>
-      <div>
+      <div className="flex flex-col items-center">
         <Pendientes packages={pendingPackages} />
         <Historial packages={deliveredPackages} />
+        <Link href={"/packages"}>
+          <button className="bg-secondary px-6 py-1 rounded-full text-primary mt-4">
+            Obtener paquetes
+          </button>
+        </Link>
       </div>
     </BgLayout>
   );

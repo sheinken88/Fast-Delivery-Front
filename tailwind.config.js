@@ -16,6 +16,7 @@ module.exports = {
         primary: "#3D1DF3",
         secondary: "#00EA77",
         customGreen: "#C7FFB1",
+        customYellow: "#F8E169",
       },
     },
   },
