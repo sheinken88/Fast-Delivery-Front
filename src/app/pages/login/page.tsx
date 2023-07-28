@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Logo from "../../../public/Capa_1.svg";
+import Logo from "../../../../public/Capa_1 (1).svg";
 
 const Login = () => {
   const data = {};

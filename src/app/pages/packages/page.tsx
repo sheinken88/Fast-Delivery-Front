@@ -1,6 +1,6 @@
 "use client";
 import NavbarLayout from "app/layoutContainer";
-import PackageCard from "../components/packageInfo";
+import PackageCard from "../../components/packageInfo";
 import React from "react";
 import LayoutContainer from "app/layoutContainer";
 import { BgLayout } from "app/bgLayout";
