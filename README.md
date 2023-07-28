@@ -68,6 +68,10 @@ FAST-DELIVERY_FRONT
 └── tsconfig.json
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> develop
+=======
+
+>>>>>>> 923c325a508c64e91b000c36f494d2e8ed45c898
