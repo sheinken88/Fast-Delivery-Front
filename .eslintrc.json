@@ -6,15 +6,21 @@
     },
     "extends": [
         "standard-with-typescript",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:prettier/recommended"
     ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
-    "plugins": [
-        "react"
-    ],
+    "plugins": ["react", "@typescript-eslint", "prettier"],
     "rules": {
+        "quotes": ["warn", "single"],
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "react/react-in-jsx-scope": "off",
+        "prettier/prettier": ["warn"]
     }
 }
