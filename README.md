@@ -67,3 +67,7 @@ FAST-DELIVERY_FRONT
 ├── tailwind.config.js
 └── tsconfig.json
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
