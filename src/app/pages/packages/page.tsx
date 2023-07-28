@@ -11,7 +11,7 @@ interface PackageInfo {
     quantity: number
 }
 
-export default function packages() {
+export default function Packages() {
     const packages: PackageInfo[] = [
         {
             address: 'Amenabar 2356',

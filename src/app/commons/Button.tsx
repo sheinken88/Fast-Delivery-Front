@@ -8,8 +8,11 @@ interface ButtonProps {
 export const Button: React.FC<ButtonProps> = ({ customStyle, children }) => {
   return (
     <button
-      className={`bg-secondary text-primary py-2 w-72 rounded-3xl mt-4 mx-auto block ${customStyle}`}
+      className={`relative bg-secondary text-primary py-2 w-full rounded-3xl ${customStyle}`}
       type="button"
+      style={{
+        maxWidth: "100%",
+      }}
     >
       {children}
     </button>
