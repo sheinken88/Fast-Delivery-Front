@@ -77,3 +77,36 @@ FAST-DELIVERY_FRONT
 ### Jornada
 
 ### Current-delivery
+
+The "current-delivery" page displays information about an ongoing delivery and allows the user to either finalize or cancel the delivery. It provides details about the current package, such as the address, city, package number, recipient, and includes a related map component.
+
+## Props
+
+This is the interface of the Package received through props:
+
+```typescript
+interface Package {
+    id: string
+    address: string
+    city: string
+    quantity: number
+    receiver: string
+}
+```
+
+## Example Prop Data (packageInfo):
+
+```typescript
+const packageInfo: Package = {
+    id: '#0A235',
+    address: 'Amenabar 2356',
+    city: 'CABA',
+    quantity: 2,
+    receiver: 'David Rodriguez',
+}
+```
+
+## Actions:
+
+-   Finalize: By clicking the "Finalize" button, the user can complete the ongoing package delivery.
+-   Cancel delivery: By clicking the "Cancel delivery" button, the user can cancel the ongoing package delivery.
