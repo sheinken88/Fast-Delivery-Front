@@ -3,6 +3,7 @@ import { BgLayout } from 'app/bgLayout'
 import { MapComponent } from '../../components/map'
 import LayoutContainer from '../../layoutContainer'
 import { Button } from '../../commons/Button'
+import Link from 'next/link'
 
 interface Package {
     id: string
@@ -40,13 +41,17 @@ const CurrentDelivery = () => {
                             {packageInfo.receiver}
                         </div>
                     </div>
-                    <Button>Finalizar</Button>
+                    <Link href={'/pages/start-shift'}>
+                        <Button>Finalizar</Button>
+                    </Link>
                 </div>
             </LayoutContainer>
             <div className="py-4">
-                <Button customStyle="text-white bg-transparent border-secondary border">
-                    Cancelar entrega
-                </Button>
+                <Link href={'/pages/packages'}>
+                    <Button customStyle="text-white bg-transparent border-secondary border">
+                        Cancelar entrega
+                    </Button>
+                </Link>
             </div>
         </BgLayout>
     )

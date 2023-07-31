@@ -67,12 +67,14 @@ const Signup = () => {
                         togglePasswordVisibility={togglePasswordVisibility1}
                     />
                 </div>
-                <div className="mt-20 flex justify-center flex-col items-center">
-                    <Button customStyle="absolute w-72">Crear</Button>
-                    <p className="text-primary mt-2 mb-2">
-                        ¿Ya tenés una cuenta?
-                    </p>
-                </div>
+                <Link href={'/pages/start-shift'}>
+                    <div className="mt-20 flex justify-center flex-col items-center">
+                        <Button customStyle="absolute w-72">Crear</Button>
+                        <p className="text-primary mt-2 mb-2">
+                            ¿Ya tenés una cuenta?
+                        </p>
+                    </div>
+                </Link>
                 <Link href="/pages/login">
                     <div className="mb-4">
                         <Button customStyle="bg-transparent border border-secondary absolute w-72">

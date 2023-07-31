@@ -85,7 +85,7 @@ const Jornada: React.FC = () => {
             <div className="flex flex-col items-center">
                 <Pending packages={pendingPackages} />
                 <History packages={deliveredPackages} />
-                <Link href={'/packages'}>
+                <Link href={'/pages/packages'}>
                     <button className="bg-secondary px-6 py-1 rounded-full text-primary mt-4">
                         Obtener paquetes
                     </button>

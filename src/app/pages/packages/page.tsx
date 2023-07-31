@@ -4,6 +4,7 @@ import React from 'react'
 import LayoutContainer from 'app/layoutContainer'
 import { BgLayout } from 'app/bgLayout'
 import { Button } from 'app/commons/Button'
+import Link from 'next/link'
 
 interface PackageInfo {
     address: string
@@ -66,9 +67,11 @@ export default function Packages() {
                         ))}
                     </div>
                 </LayoutContainer>
-                <Button customStyle="mt-4 mx-auto block">
-                    Iniciar Jornada
-                </Button>
+                <Link href={'/pages/current-delivery'}>
+                    <Button customStyle="mt-4 mx-auto block">
+                        Iniciar Jornada
+                    </Button>
+                </Link>
             </div>
         </BgLayout>
     )

@@ -5,6 +5,7 @@ import Logo from '../../public/Capa_1 (1).svg'
 import type { ReactNode } from 'react'
 import { TbLogout } from 'react-icons/tb'
 import { IconContext } from 'react-icons'
+import Link from 'next/link'
 
 interface BgLayoutProps {
     children: ReactNode
@@ -26,14 +27,16 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
                 </div>
 
                 <div className="cursor-pointer border-b border-transparent shadow-xl lg:shadow-2xl">
-                    <IconContext.Provider
-                        value={{
-                            color: 'white',
-                            size: '30px',
-                        }}
-                    >
-                        <TbLogout />
-                    </IconContext.Provider>
+                    <Link href={'/pages/login'}>
+                        <IconContext.Provider
+                            value={{
+                                color: 'white',
+                                size: '30px',
+                            }}
+                        >
+                            <TbLogout />
+                        </IconContext.Provider>
+                    </Link>
                 </div>
             </div>
             <div className="p-10 flex-grow">{children}</div>
