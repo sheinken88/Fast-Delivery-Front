@@ -85,6 +85,8 @@ Forgot password: By clicking the "Forgot my password" text, the user can navigat
 
 ### Signup
 
+The signup page is responsible for creating a new user and requests the following information: email, password, and password verification. Additionally, it provides a link to the login page for users who already have an existing account.
+
 ### Start-Shift
 
 The "Start-shift" component displays information about the current delivery journey, with details about each package in the journey. It consists of two main sub-components: Pending and History. The Pending sub-component displays the details of the packages that are pending delivery, while the History sub-component shows the packages that have been delivered.
