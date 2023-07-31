@@ -1,49 +1,85 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { BgLayout } from 'app/bgLayout'
 import LayoutContainer from 'app/layoutContainer'
+import { Button } from 'app/commons/Button'
+import { Input } from 'app/commons/Input'
+import { CiLock } from 'react-icons/ci'
+import {
+    AiOutlineEye,
+    AiOutlineEyeInvisible,
+    AiOutlineUser,
+} from 'react-icons/ai'
 
 const Signup = () => {
+    const [showPassword, setShowPassword] = useState(false)
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword)
+    }
+
+    const [showPassword1, setShowPassword1] = useState(false)
+
+    const togglePasswordVisibility1 = () => {
+        setShowPassword1((prevShowPassword1) => !prevShowPassword1)
+    }
+
     return (
         <BgLayout>
             <LayoutContainer title={'Creá tu cuenta'}>
-                <div className="mb-4 mt-20">
-                    <input
-                        className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent"
-                        id="email"
+                <div className="mt-20">
+                    <Input
                         type="text"
                         placeholder="email@contraseña.com"
+                        iconType={
+                            <AiOutlineUser className="w-full h-full text-primary" />
+                        }
                     />
-                </div>
-                <div className="mb-6">
-                    <input
-                        className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent"
-                        id="password"
-                        type="password"
+                    <Input
+                        type={showPassword ? 'text' : 'password'}
                         placeholder="Password"
+                        iconType={
+                            <CiLock className="w-full h-full text-primary" />
+                        }
+                        iconTypeRight={
+                            showPassword ? (
+                                <AiOutlineEye className="w-full h-full text-primary cursor-pointer" />
+                            ) : (
+                                <AiOutlineEyeInvisible className="w-full h-full text-primary cursor-pointer" />
+                            )
+                        }
+                        togglePasswordVisibility={togglePasswordVisibility}
                     />
-                </div>
-                <div className="mb-6">
-                    <input
-                        className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent"
-                        id="password"
-                        type="password"
+                    <Input
+                        type={showPassword1 ? 'text' : 'password'}
                         placeholder="Confirm Password"
+                        iconType={
+                            <CiLock className="w-full h-full text-primary" />
+                        }
+                        iconTypeRight={
+                            showPassword1 ? (
+                                <AiOutlineEye className="w-full h-full text-primary cursor-pointer" />
+                            ) : (
+                                <AiOutlineEyeInvisible className="w-full h-full text-primary cursor-pointer" />
+                            )
+                        }
+                        togglePasswordVisibility={togglePasswordVisibility1}
                     />
                 </div>
                 <div className="mt-20 flex justify-center flex-col items-center">
-                    <button className="bg-secondary rounded-full px-4 py-2 text-primary w-72">
-                        Crear cuenta
-                    </button>
+                    <Button customStyle="absolute w-72">Crear</Button>
                     <p className="text-primary mt-2 mb-2">
                         ¿Ya tenés una cuenta?
                     </p>
-                    <Link href="/login">
-                        <button className="bg-secondary rounded-full px-4 py-2 mb-2 text-primary w-72">
-                            Iniciar sesión
-                        </button>
-                    </Link>
                 </div>
+                <Link href="/pages/login">
+                    <div className="mb-4">
+                        <Button customStyle="bg-transparent border border-secondary absolute w-72">
+                            Iniciar sesión
+                        </Button>
+                    </div>
+                </Link>
             </LayoutContainer>
         </BgLayout>
     )

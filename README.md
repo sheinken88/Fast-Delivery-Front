@@ -41,31 +41,50 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ```
 FAST-DELIVERY_FRONT
-├── .husky
-├── public # Store static files like images, fonts etc.
-├── src
-│ ├── app
-│ │ ├── components # Reusable components (header, footer, buttons etc.)
-│ │ ├── pages # All the main pages go here.
-│ │ └── layout.tsx # Main layout component
-│ │ ├── layoutContainer.tsx # Layout wrapper for the app
-│ │ └── page.tsx # Entry point of the app
-│ ├── services # Services for handling business logic
-│ ├── state # State management files (Redux)
-│ ├── utils # Utility functions and helpers
-│ └── styles # Global styles, variables, themes
-├── .dockerignore
-├── .eslintrc.json
-├── .gitignore
-├── .lintstagedrc
-├── README.md
-├── dockerfile
-├── next.config.js
-├── package-lock.json
-├── package.json
-├── postcss.config.js
-├── tailwind.config.js
-└── tsconfig.json
+|
+|-- .husky # Git hooks made easy.
+|
+|-- public # Store static files like images, fonts, etc.
+|
+|-- src
+| |-- app
+| | |-- components # Reusable components (header, footer, buttons etc.)
+| | |-- pages # All the main pages go here.
+| | |-- layout.tsx # Main layout component.
+| | |-- layoutContainer.tsx # Layout wrapper for the app.
+| | |-- page.tsx # Entry point of the app.
+| |
+| |-- services # Services for handling business logic.
+| |
+| |-- state # State management files (Redux).
+| |
+| |-- utils # Utility functions and helpers.
+| |
+| |-- styles # Global styles, variables, themes.
+|
+|-- .dockerignore # Lists files/directories that Docker should not copy into the container.
+|
+|-- .eslintrc.json # Defines the rules for the linter.
+|
+|-- .gitignore # Specifies files that Git should ignore.
+|
+|-- .lintstagedrc # Configuration for lint-staged, a tool that runs linters on staged git files.
+|
+|-- README.md # Provides an overview and documentation for the project.
+|
+|-- dockerfile # Contains Docker instructions for building a Docker image for the application.
+|
+|-- next.config.js # Configuration for Next.js.
+|
+|-- package-lock.json # Contains the exact version of installed npm dependencies in order to reproduce an identical dependency tree.
+|
+|-- package.json # Lists the package dependencies for the project. Also includes metadata about the project such as name, description, and version.
+|
+|-- postcss.config.js # Configuration for PostCSS, a tool for transforming CSS with JavaScript.
+|
+|-- tailwind.config.js # Configuration file for Tailwind CSS, a utility-first CSS framework.
+|
+|-- tsconfig.json # Contains the configurations and options for the TypeScript compiler.
 ```
 
 ## Usage and Features
@@ -84,6 +103,8 @@ Create account: By clicking the "Create account" button, the user can navigate t
 Forgot password: By clicking the "Forgot my password" text, the user can navigate to the password recovery process (implementation not shown in the provided code).
 
 ### Signup
+
+The signup page is responsible for creating a new user and requests the following information: email, password, and password verification. Additionally, it provides a link to the login page for users who already have an existing account.
 
 ### Start-Shift
 
@@ -146,7 +167,46 @@ interface Package {
 
 -   Checkbox: Selects a package to delivery.
 -   Quantity selector: Selects the quantity of packages to deliver.
--   When the "Iniciar Jornada" (Start Journey) button is clicked, it triggers an action (not specified in the code) that initiates the delivery route.
+-   When the "Iniciar Start-Shift
+
+The "Start-shift" component displays information about the current delivery journey, with details about each package in the journey. It consists of two main sub-components: Pending and History. The Pending sub-component displays the details of the packages that are pending delivery, while the History sub-component shows the packages that have been delivered.
+
+## Props
+
+The component receives a list of packages as props, where each package is represented as an object with the following interface:
+
+```typescript
+interface Package {
+    id: string
+    address: string
+    city: string
+    status: string
+}
+```
+
+## Example Prop Data (packageInfo):
+
+```
+const packages: Package[] = [
+    {
+        id: 'PKG12345',
+        address: 'Av. Corrientes 123',
+        city: 'Buenos Aires',
+        status: 'in progress',
+    },
+    {
+        id: 'PKG98765',
+        address: 'Calle Florida 456',
+        city: 'Buenos Aires',
+        status: 'delivered',
+    },
+    //...
+]
+```
+
+## Actions:
+
+-   Get packages: By clicking the "Get packages" button, the user can navigate to the page which displays the details of all the packages (implementation not shown in the provided code)." (Start Journey) button is clicked, it triggers an action (not specified in the code) that initiates the delivery route.
 
 ### Current-delivery
 
