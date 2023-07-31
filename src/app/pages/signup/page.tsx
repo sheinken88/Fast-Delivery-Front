@@ -5,9 +5,12 @@ import { BgLayout } from 'app/bgLayout'
 import LayoutContainer from 'app/layoutContainer'
 import { Button } from 'app/commons/Button'
 import { Input } from 'app/commons/Input'
-import { FaRegUser } from 'react-icons/fa'
 import { CiLock } from 'react-icons/ci'
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
+import {
+    AiOutlineEye,
+    AiOutlineEyeInvisible,
+    AiOutlineUser,
+} from 'react-icons/ai'
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false)
@@ -30,7 +33,7 @@ const Signup = () => {
                         type="text"
                         placeholder="email@contraseña.com"
                         iconType={
-                            <FaRegUser className="w-full h-full text-primary" />
+                            <AiOutlineUser className="w-full h-full text-primary" />
                         }
                     />
                     <Input
