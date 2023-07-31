@@ -1,8 +1,8 @@
 'use client'
-import React, { useState, type FC } from 'react'
+import React, { useState } from 'react'
+import type { FC } from 'react'
 import { BiSolidDownArrow } from 'react-icons/bi'
-import { PiPackageLight } from 'react-icons/pi'
-import { RiDeleteBin6Line } from 'react-icons/ri'
+import PendingPkg from '../commons/PendingPkg'
 import { IconContext } from 'react-icons'
 
 interface Package {
@@ -16,7 +16,7 @@ interface DeliveredProps {
     packages: Package[]
 }
 
-export const Historial: FC<DeliveredProps> = ({ packages }) => {
+export const History: FC<DeliveredProps> = ({ packages }) => {
     const [isVisible, setIsVisible] = useState(true)
 
     const toggleVisibility = () => {
@@ -45,43 +45,7 @@ export const Historial: FC<DeliveredProps> = ({ packages }) => {
             {isVisible && (
                 <div className="flex flex-col gap-4">
                     {packages.map((pkg) => (
-                        <div
-                            key={pkg.id}
-                            className="flex items-center gap-4 border border-primary rounded-lg p-2"
-                        >
-                            <div id="cajita">
-                                <IconContext.Provider
-                                    value={{
-                                        color: '#3D1DF3',
-                                        size: '32px',
-                                    }}
-                                >
-                                    <PiPackageLight />
-                                </IconContext.Provider>
-                            </div>
-                            <div id="info pkg" className="flex flex-col w-full">
-                                <div className="flex justify-between text-primary font-bold text-xs">
-                                    <p>#{pkg.id}</p>
-                                    <p className="bg-customGreen px-3 rounded-full">
-                                        EN CURSO
-                                    </p>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    <div className="flex flex-col mt-2 text-primary text-xs">
-                                        <p>{pkg.address},</p>
-                                        <p>{pkg.city}</p>
-                                    </div>
-                                    <IconContext.Provider
-                                        value={{
-                                            color: 'red',
-                                            size: '16px',
-                                        }}
-                                    >
-                                        <RiDeleteBin6Line />
-                                    </IconContext.Provider>
-                                </div>
-                            </div>
-                        </div>
+                        <PendingPkg key={pkg.id} packageData={pkg} />
                     ))}
                 </div>
             )}
