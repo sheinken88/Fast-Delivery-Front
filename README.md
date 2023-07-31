@@ -41,31 +41,50 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ```
 FAST-DELIVERY_FRONT
-├── .husky
-├── public # Store static files like images, fonts etc.
-├── src
-│ ├── app
-│ │ ├── components # Reusable components (header, footer, buttons etc.)
-│ │ ├── pages # All the main pages go here.
-│ │ └── layout.tsx # Main layout component
-│ │ ├── layoutContainer.tsx # Layout wrapper for the app
-│ │ └── page.tsx # Entry point of the app
-│ ├── services # Services for handling business logic
-│ ├── state # State management files (Redux)
-│ ├── utils # Utility functions and helpers
-│ └── styles # Global styles, variables, themes
-├── .dockerignore
-├── .eslintrc.json
-├── .gitignore
-├── .lintstagedrc
-├── README.md
-├── dockerfile
-├── next.config.js
-├── package-lock.json
-├── package.json
-├── postcss.config.js
-├── tailwind.config.js
-└── tsconfig.json
+|
+|-- .husky # Git hooks made easy.
+|
+|-- public # Store static files like images, fonts, etc.
+|
+|-- src
+| |-- app
+| | |-- components # Reusable components (header, footer, buttons etc.)
+| | |-- pages # All the main pages go here.
+| | |-- layout.tsx # Main layout component.
+| | |-- layoutContainer.tsx # Layout wrapper for the app.
+| | |-- page.tsx # Entry point of the app.
+| |
+| |-- services # Services for handling business logic.
+| |
+| |-- state # State management files (Redux).
+| |
+| |-- utils # Utility functions and helpers.
+| |
+| |-- styles # Global styles, variables, themes.
+|
+|-- .dockerignore # Lists files/directories that Docker should not copy into the container.
+|
+|-- .eslintrc.json # Defines the rules for the linter.
+|
+|-- .gitignore # Specifies files that Git should ignore.
+|
+|-- .lintstagedrc # Configuration for lint-staged, a tool that runs linters on staged git files.
+|
+|-- README.md # Provides an overview and documentation for the project.
+|
+|-- dockerfile # Contains Docker instructions for building a Docker image for the application.
+|
+|-- next.config.js # Configuration for Next.js.
+|
+|-- package-lock.json # Contains the exact version of installed npm dependencies in order to reproduce an identical dependency tree.
+|
+|-- package.json # Lists the package dependencies for the project. Also includes metadata about the project such as name, description, and version.
+|
+|-- postcss.config.js # Configuration for PostCSS, a tool for transforming CSS with JavaScript.
+|
+|-- tailwind.config.js # Configuration file for Tailwind CSS, a utility-first CSS framework.
+|
+|-- tsconfig.json # Contains the configurations and options for the TypeScript compiler.
 ```
 
 ## Usage and Features
