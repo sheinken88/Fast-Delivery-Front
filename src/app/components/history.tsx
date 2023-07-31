@@ -24,7 +24,7 @@ export const History: FC<DeliveredProps> = ({ packages }) => {
     }
 
     return (
-        <div className=" bg-white p-4 rounded-xl">
+        <div className="w-full bg-white p-4 rounded-xl">
             <div
                 className="flex justify-between items-center font-bold text-primary mb-4 cursor-pointer"
                 onClick={toggleVisibility}

@@ -12,7 +12,7 @@ interface BgLayoutProps {
 
 export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
     return (
-        <div className="bg-primary">
+        <div className="bg-primary min-h-screen min-w-screen flex flex-col">
             <div className="flex justify-between py-3 px-4 border-b border-transparent shadow-xl lg:shadow-2xl">
                 <div className="cursor-pointer">
                     <Image
@@ -36,7 +36,7 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
                     </IconContext.Provider>
                 </div>
             </div>
-            <div className="p-10">{children}</div>
+            <div className="p-10 flex-grow">{children}</div>
         </div>
     )
 }

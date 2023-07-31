@@ -22,8 +22,9 @@ export const Pending: FC<PendingProps> = ({ packages }) => {
     const toggleVisibility = () => {
         setIsVisible(!isVisible)
     }
+
     return (
-        <div className=" bg-white p-4 rounded-xl mb-4">
+        <div className="w-full bg-white p-4 rounded-xl mb-4">
             <div
                 className="flex justify-between items-center font-bold text-primary mb-4 cursor-pointer"
                 onClick={toggleVisibility}
