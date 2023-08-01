@@ -1,9 +1,15 @@
+'use client'
 import React from 'react'
 import { BgLayout } from '../../bgLayout'
-import { MapComponent } from '../../../src/components/map'
+import dynamic from 'next/dynamic'
 import LayoutContainer from '../../layoutContainer'
 import { Button } from '../../../src/commons/Button'
 import Link from 'next/link'
+
+const MapComponent = dynamic(
+    () => import('../../../src/components/map').then((mod) => mod.MapComponent),
+    { ssr: false }
+)
 
 interface Package {
     id: string
