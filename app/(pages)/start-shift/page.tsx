@@ -1,7 +1,7 @@
 import React from 'react'
-import { Pending } from 'app/components/pending'
-import { History } from 'app/components/history'
-import { BgLayout } from 'app/bgLayout'
+import { Pending } from '../../../src/components/pending'
+import { History } from '../../../src/components/history'
+import { BgLayout } from '../../bgLayout'
 import Link from 'next/link'
 
 export interface Package {

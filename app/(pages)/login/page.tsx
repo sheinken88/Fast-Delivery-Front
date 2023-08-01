@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import Logo from '../../../../public/Capa_1.svg'
+import Logo from '../../../public/Capa_1.svg'
 
 const Login = () => {
     return (
@@ -34,13 +34,15 @@ const Login = () => {
                     />
                 </div>
                 <div className="flex flex-col items-center justify-between text-center">
-                    <button
-                        className="bg-secondary text-primary py-2 w-72 rounded-3xl"
-                        type="button"
-                    >
-                        Ingresar
-                    </button>
-                    <Link href={'/pages/signup'}>
+                    <Link href={'/start-shift'}>
+                        <button
+                            className="bg-secondary text-primary py-2 w-72 rounded-3xl"
+                            type="button"
+                        >
+                            Ingresar
+                        </button>
+                    </Link>
+                    <Link href={'/signup'}>
                         <button
                             className="border-2 border-secondary text-white whitespace-nowrap	 py-2 w-72 rounded-3xl mt-4"
                             type="button"

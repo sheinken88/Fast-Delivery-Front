@@ -1,9 +1,10 @@
 'use client'
-import PackageCard from '../../components/packageInfo'
+import PackageCard from '../../../src/components/packageInfo'
 import React from 'react'
-import LayoutContainer from 'app/layoutContainer'
-import { BgLayout } from 'app/bgLayout'
-import { Button } from 'app/commons/Button'
+import LayoutContainer from '../../../app/layoutContainer'
+import { BgLayout } from '../../../app/bgLayout'
+import { Button } from '../../../src/commons/Button'
+import Link from 'next/link'
 
 interface PackageInfo {
     address: string
@@ -66,9 +67,11 @@ export default function Packages() {
                         ))}
                     </div>
                 </LayoutContainer>
-                <Button customStyle="mt-4 mx-auto block">
-                    Iniciar Jornada
-                </Button>
+                <Link href={'/current-delivery'}>
+                    <Button customStyle="mt-4 mx-auto block">
+                        Iniciar Jornada
+                    </Button>
+                </Link>
             </div>
         </BgLayout>
     )
