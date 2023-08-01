@@ -1,7 +1,7 @@
 import React from 'react'
-import { Pending } from 'app/components/pending'
-import { History } from 'app/components/history'
-import { BgLayout } from 'app/bgLayout'
+import { Pending } from '../../../src/components/pending'
+import { History } from '../../../src/components/history'
+import { BgLayout } from '../../bgLayout'
 import Link from 'next/link'
 
 export interface Package {
@@ -85,7 +85,7 @@ const Jornada: React.FC = () => {
             <div className="flex flex-col items-center">
                 <Pending packages={pendingPackages} />
                 <History packages={deliveredPackages} />
-                <Link href={'/pages/packages'}>
+                <Link href={'/packages'}>
                     <button className="bg-secondary px-6 py-1 rounded-full text-primary mt-4">
                         Obtener paquetes
                     </button>

@@ -1,8 +1,8 @@
 import React from 'react'
-import { BgLayout } from 'app/bgLayout'
-import { MapComponent } from '../../components/map'
+import { BgLayout } from '../../bgLayout'
+import { MapComponent } from '../../../src/components/map'
 import LayoutContainer from '../../layoutContainer'
-import { Button } from '../../commons/Button'
+import { Button } from '../../../src/commons/Button'
 import Link from 'next/link'
 
 interface Package {
@@ -41,13 +41,13 @@ const CurrentDelivery = () => {
                             {packageInfo.receiver}
                         </div>
                     </div>
-                    <Link href={'/pages/start-shift'}>
+                    <Link href={'/start-shift'}>
                         <Button>Finalizar</Button>
                     </Link>
                 </div>
             </LayoutContainer>
             <div className="py-4">
-                <Link href={'/pages/packages'}>
+                <Link href={'/packages'}>
                     <Button customStyle="text-white bg-transparent border-secondary border">
                         Cancelar entrega
                     </Button>
