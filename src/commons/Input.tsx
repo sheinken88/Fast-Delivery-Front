@@ -17,23 +17,12 @@ export const Input: React.FC<InputProps> = ({
     iconType,
     iconTypeRight,
     togglePasswordVisibility,
-    showPassword,
 }) => {
-    const isPasswordType = type === 'password'
-    const inputType =
-        isPasswordType && showPassword !== undefined
-            ? showPassword
-                ? 'text'
-                : 'password'
-            : type === 'text'
-            ? 'text'
-            : type
-
     return (
         <div className="relative py-2">
             <input
                 className={`text-primary border border-primary rounded-lg p-2 pl-10 w-full placeholder-primary ${customStyle}`}
-                type={inputType}
+                type={type}
                 style={{
                     maxWidth: '100%',
                 }}
@@ -43,7 +32,7 @@ export const Input: React.FC<InputProps> = ({
                 {iconType}
             </span>
             <span
-                className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
+                className="absolute top-1/2 right-3 w-6 h-6 transform -translate-y-1/2 cursor-pointer"
                 onClick={togglePasswordVisibility}
             >
                 {iconTypeRight}
