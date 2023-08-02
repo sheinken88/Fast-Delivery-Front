@@ -5,12 +5,12 @@ import { BgLayout } from '../../bgLayout'
 import LayoutContainer from '../../layoutContainer'
 import { Button } from '../../../src/commons/Button'
 import { Input } from '../../../src/commons/Input'
-import { CiLock } from 'react-icons/ci'
 import {
     AiOutlineEye,
     AiOutlineEyeInvisible,
     AiOutlineUser,
 } from 'react-icons/ai'
+import { HiOutlineLockClosed } from 'react-icons/hi'
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false)
@@ -28,62 +28,60 @@ const Signup = () => {
     return (
         <BgLayout>
             <LayoutContainer title={'Creá tu cuenta'}>
-                <form>
-                    <div className="mt-20">
-                        <Input
-                            type="text"
-                            placeholder="email@contraseña.com"
-                            iconType={
-                                <AiOutlineUser className="w-full h-full text-primary" />
-                            }
-                        />
-                        <Input
-                            type={showPassword ? 'text' : 'password'}
-                            placeholder="Password"
-                            iconType={
-                                <CiLock className="w-full h-full text-primary" />
-                            }
-                            iconTypeRight={
-                                showPassword ? (
-                                    <AiOutlineEye className="w-full h-full text-primary cursor-pointer" />
-                                ) : (
-                                    <AiOutlineEyeInvisible className="w-full h-full text-primary cursor-pointer" />
-                                )
-                            }
-                            togglePasswordVisibility={togglePasswordVisibility}
-                        />
-                        <Input
-                            type={showPassword1 ? 'text' : 'password'}
-                            placeholder="Confirm Password"
-                            iconType={
-                                <CiLock className="w-full h-full text-primary" />
-                            }
-                            iconTypeRight={
-                                showPassword1 ? (
-                                    <AiOutlineEye className="w-full h-full text-primary cursor-pointer" />
-                                ) : (
-                                    <AiOutlineEyeInvisible className="w-full h-full text-primary cursor-pointer" />
-                                )
-                            }
-                            togglePasswordVisibility={togglePasswordVisibility1}
-                        />
+                <div className="mt-20">
+                    <Input
+                        type="text"
+                        placeholder="email@contraseña.com"
+                        iconType={
+                            <AiOutlineUser className="w-full h-full text-primary" />
+                        }
+                    />
+                    <Input
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Password"
+                        iconType={
+                            <HiOutlineLockClosed className="w-full h-full text-primary" />
+                        }
+                        iconTypeRight={
+                            showPassword ? (
+                                <AiOutlineEye className="w-full h-full text-primary cursor-pointer" />
+                            ) : (
+                                <AiOutlineEyeInvisible className="w-full h-full text-primary cursor-pointer" />
+                            )
+                        }
+                        togglePasswordVisibility={togglePasswordVisibility}
+                    />
+                    <Input
+                        type={showPassword1 ? 'text' : 'password'}
+                        placeholder="Confirm Password"
+                        iconType={
+                            <HiOutlineLockClosed className="w-full h-full text-primary" />
+                        }
+                        iconTypeRight={
+                            showPassword1 ? (
+                                <AiOutlineEye className="w-full h-full text-primary cursor-pointer" />
+                            ) : (
+                                <AiOutlineEyeInvisible className="w-full h-full text-primary cursor-pointer" />
+                            )
+                        }
+                        togglePasswordVisibility={togglePasswordVisibility1}
+                    />
+                </div>
+                <Link href={'/start-shift'}>
+                    <div className="mt-20 flex justify-center flex-col items-center">
+                        <Button>Crear</Button>
+                        <p className="text-primary mt-2 mb-2">
+                            ¿Ya tenés una cuenta?
+                        </p>
                     </div>
-                    <Link href={'/start-shift'}>
-                        <div className="mt-20 flex justify-center flex-col items-center">
-                            <Button>Crear</Button>
-                            <p className="text-primary mt-2 mb-2">
-                                ¿Ya tenés una cuenta?
-                            </p>
-                        </div>
-                    </Link>
-                    <Link href="/login">
-                        <div className="mb-4">
-                            <Button customStyle="bg-transparent border border-secondary">
-                                Iniciar sesión
-                            </Button>
-                        </div>
-                    </Link>
-                </form>
+                </Link>
+                <Link href="/login">
+                    <div className="mb-4">
+                        <Button customStyle="bg-transparent border border-secondary">
+                            Iniciar sesión
+                        </Button>
+                    </div>
+                </Link>
             </LayoutContainer>
         </BgLayout>
     )
