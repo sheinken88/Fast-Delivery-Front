@@ -75,7 +75,9 @@ const Jornada: React.FC = () => {
         },
     ]
 
-    const pendingPackages = packages.filter((pkg) => pkg.status === 'pendiente')
+    const pendingPackages = packages.filter(
+        (pkg) => pkg.status === 'pendiente' || pkg.status === 'en curso'
+    )
     const deliveredPackages = packages.filter(
         (pkg) => pkg.status === 'entregado'
     )
