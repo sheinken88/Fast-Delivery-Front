@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { BgLayout } from '../../bgLayout'
 import LayoutContainer from '../../layoutContainer'
-import { Button } from '../../../src/commons/Button'
-import { Input } from '../../../src/commons/Input'
+import { Button } from '../../../src/commons/generic/Button'
+import { Input } from '../../../src/commons/generic/Input'
 import {
     AiOutlineEye,
     AiOutlineEyeInvisible,

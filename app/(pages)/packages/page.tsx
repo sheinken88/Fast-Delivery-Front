@@ -3,7 +3,7 @@ import PackageCard from '../../../src/components/packageInfo'
 import React from 'react'
 import LayoutContainer from '../../../app/layoutContainer'
 import { BgLayout } from '../../../app/bgLayout'
-import { Button } from '../../../src/commons/Button'
+import { Button } from '../../../src/commons/generic/Button'
 import Link from 'next/link'
 
 interface PackageInfo {
