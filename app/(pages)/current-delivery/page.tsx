@@ -3,11 +3,14 @@ import React from 'react'
 import { BgLayout } from '../../bgLayout'
 import dynamic from 'next/dynamic'
 import LayoutContainer from '../../layoutContainer'
-import { Button } from '../../../src/commons/Button'
+import { Button } from '../../../src/commons/generic/Button'
 import Link from 'next/link'
 
 const MapComponent = dynamic(
-    () => import('../../../src/components/map').then((mod) => mod.MapComponent),
+    async () =>
+        await import('../../../src/components/map').then(
+            (mod) => mod.MapComponent
+        ),
     { ssr: false }
 )
 
