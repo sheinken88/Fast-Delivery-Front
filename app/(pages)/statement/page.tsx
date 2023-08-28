@@ -4,6 +4,7 @@ import { BgLayout } from '../../bgLayout'
 import LayoutContainer from '../../../app/layoutContainer'
 import { Button } from 'commons/generic/Button'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 const Statement: React.FC = () => {
     const [selectedButtons, setSelectedButtons] = useState<boolean[]>([
@@ -60,12 +61,14 @@ const Statement: React.FC = () => {
                             </div>
                         </div>
                     ))}
-                    <Button
-                        onClick={handleContinue}
-                        disabled={!selectedButtons.every((val) => val)}
-                    >
-                        Continuar
-                    </Button>
+                    <Link href="/current-delivery">
+                        <Button
+                            onClick={handleContinue}
+                            disabled={!selectedButtons.every((val) => val)}
+                        >
+                            Continuar
+                        </Button>
+                    </Link>
                 </div>
             </LayoutContainer>
         </BgLayout>
