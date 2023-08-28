@@ -27,8 +27,8 @@ const Statement: React.FC = () => {
 
     const questions = [
         '¿Ha consumido bebidas alcohólicas en las últimas 12 horas?',
-        '¿Ha consumido bebidas alcohólicas en las últimas 12 horas?',
-        '¿Ha consumido bebidas alcohólicas en las últimas 12 horas?',
+        '¿Usted está haciendo uso de algún tipo de medicamento psicoactivo?',
+        '¿Tiene usted algún problema familiar, emocional o de cualquier tipo que lo distraiga? ',
     ]
 
     return (
