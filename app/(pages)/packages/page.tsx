@@ -53,7 +53,10 @@ export default function Packages() {
     return (
         <BgLayout>
             <div className="text-center">
-                <LayoutContainer title={'Obtener paquetes'}>
+                <LayoutContainer
+                    title={'Obtener paquetes'}
+                    backUrl={'/start-shift'}
+                >
                     <div className="border-b-primary border-b border-dotted text-xs font-poppins p-2">
                         ¿Cuántos paquetes repartirás hoy?
                     </div>
