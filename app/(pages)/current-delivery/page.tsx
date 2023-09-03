@@ -33,7 +33,7 @@ const CurrentDelivery = () => {
 
     return (
         <BgLayout>
-            <LayoutContainer title="Reparto en curso">
+            <LayoutContainer title="Reparto en curso" backUrl={'/packages'}>
                 <div className="flex flex-col md:flex-row">
                     <div className="text-left text-sm py-2 mx-auto">
                         <MapComponent />

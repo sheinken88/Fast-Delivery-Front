@@ -4,7 +4,6 @@ import { BgLayout } from '../../bgLayout'
 import LayoutContainer from '../../../app/layoutContainer'
 import { Button } from 'commons/generic/Button'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 
 const Statement: React.FC = () => {
     const [selectedButtons, setSelectedButtons] = useState<boolean[]>([
@@ -22,7 +21,7 @@ const Statement: React.FC = () => {
 
     const handleContinue = async (): Promise<void> => {
         if (selectedButtons.every((val) => val)) {
-            router.push('/start-shift')
+            router.push('/current-delivery')
         }
     }
 
@@ -34,7 +33,7 @@ const Statement: React.FC = () => {
 
     return (
         <BgLayout>
-            <LayoutContainer title={'Declaración Jurada'}>
+            <LayoutContainer title={'Declaración Jurada'} backUrl={'/login'}>
                 <div className="flex flex-col gap-4 px-4 mt-4 mb-4">
                     {questions.map((question, index) => (
                         <div
@@ -61,14 +60,13 @@ const Statement: React.FC = () => {
                             </div>
                         </div>
                     ))}
-                    <Link href="/current-delivery">
-                        <Button
-                            onClick={handleContinue}
-                            disabled={!selectedButtons.every((val) => val)}
-                        >
-                            Continuar
-                        </Button>
-                    </Link>
+
+                    <Button
+                        onClick={handleContinue}
+                        disabled={!selectedButtons.every((val) => val)}
+                    >
+                        Continuar
+                    </Button>
                 </div>
             </LayoutContainer>
         </BgLayout>
