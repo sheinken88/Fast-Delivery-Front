@@ -27,7 +27,7 @@ const Signup = () => {
 
     return (
         <BgLayout>
-            <LayoutContainer title={'Creá tu cuenta'}>
+            <LayoutContainer title={'Creá tu cuenta'} backUrl={'/login'}>
                 <div className="mt-20">
                     <Input
                         type="text"
