@@ -35,7 +35,7 @@ const Statement: React.FC = () => {
     return (
         <BgLayout>
             <LayoutContainer title={'Declaración Jurada'}>
-                <div className="flex flex-col gap-4 px-4 mt-4">
+                <div className="flex flex-col gap-4 px-4 mt-4 mb-4">
                     {questions.map((question, index) => (
                         <div
                             className="border-2 rounded-lg py-4 px-4"
