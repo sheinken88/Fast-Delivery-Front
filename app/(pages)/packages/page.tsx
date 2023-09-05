@@ -1,55 +1,47 @@
 'use client'
-import PackageCard from '../../../src/components/packageInfo'
-import React from 'react'
+import PackageSelect from 'components/packageSelect'
+import React, { useEffect, useState } from 'react'
 import LayoutContainer from '../../../app/layoutContainer'
 import { BgLayout } from '../../../app/bgLayout'
 import { Button } from '../../../src/commons/generic/Button'
 import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from 'store/store'
+import { setPackages } from 'store/slices/packagesSlice'
+import { loadPackages } from 'services/packagesService'
 
 interface PackageInfo {
     address: string
     city: string
-    quantity: number
 }
 
 export default function Packages() {
-    const packages: PackageInfo[] = [
-        {
-            address: 'Amenabar 2356',
-            city: 'CABA',
-            quantity: 2,
-        },
-        {
-            address: 'Av Carabobo y Rivadavia',
-            city: 'CABA',
-            quantity: 4,
-        },
-        {
-            address: 'Melian 1242',
-            city: 'CABA',
-            quantity: 1,
-        },
-        {
-            address: 'Castillo 670',
-            city: 'CABA',
-            quantity: 1,
-        },
-        {
-            address: 'Gorriti 4595',
-            city: 'CABA',
-            quantity: 3,
-        },
-        {
-            address: 'Av. Gral. Mosconi 1056',
-            city: 'CABA',
-            quantity: 1,
-        },
-        {
-            address: 'Tacuarí 1797',
-            city: 'CABA',
-            quantity: 1,
-        },
-    ]
+    const [selectedPackages, setSelectedPackages] = useState<PackageInfo[]>([])
+
+    const dispatch = useDispatch()
+    const packages = useSelector((state: RootState) => state.packages.packages)
+
+    useEffect(() => {
+        dispatch(setPackages(loadPackages()))
+    }, [dispatch])
+
+    const handleSelect = (
+        packageInfo: PackageInfo,
+        isSelected: boolean
+    ): void => {
+        let updatedSelectedPackages = [...selectedPackages]
+
+        if (isSelected) {
+            updatedSelectedPackages.push(packageInfo)
+        } else {
+            updatedSelectedPackages = updatedSelectedPackages.filter(
+                (pkg) => pkg !== packageInfo
+            )
+        }
+
+        setSelectedPackages(updatedSelectedPackages)
+    }
+
     return (
         <BgLayout>
             <div className="text-center">
@@ -63,9 +55,15 @@ export default function Packages() {
                     <br />
                     <div className="flex flex-col gap-2 p-2 rounded-lg">
                         {packages.map((packageInfo, index) => (
-                            <PackageCard
+                            <PackageSelect
                                 key={index}
                                 packageInfo={packageInfo}
+                                order={
+                                    selectedPackages.indexOf(packageInfo) + 1
+                                }
+                                onSelect={(isSelected) => {
+                                    handleSelect(packageInfo, isSelected)
+                                }}
                             />
                         ))}
                     </div>

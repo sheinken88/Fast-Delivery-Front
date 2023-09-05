@@ -51,7 +51,7 @@ const CurrentDelivery = () => {
                         </div>
                     </div>
                     <Link href={'/start-shift'}>
-                        <Button>Finalizar</Button>
+                        <Button>Confirmar Entrega</Button>
                     </Link>
                 </div>
             </LayoutContainer>

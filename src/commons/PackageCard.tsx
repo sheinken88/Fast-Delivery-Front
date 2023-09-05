@@ -11,11 +11,15 @@ interface Package {
     status: string
 }
 
-interface PendingPackageProps {
+interface PackageCardProps {
     packageData: Package
+    showDeleteIcon?: boolean
 }
 
-const PendingPackage: FC<PendingPackageProps> = ({ packageData }) => {
+const PackageCard: FC<PackageCardProps> = ({
+    packageData,
+    showDeleteIcon = true,
+}) => {
     return (
         <div
             key={packageData.id}
@@ -49,18 +53,20 @@ const PendingPackage: FC<PendingPackageProps> = ({ packageData }) => {
                         <p>{packageData.address},</p>
                         <p>{packageData.city}</p>
                     </div>
-                    <IconContext.Provider
-                        value={{
-                            color: 'red',
-                            size: '16px',
-                        }}
-                    >
-                        <RiDeleteBin6Line />
-                    </IconContext.Provider>
+                    {showDeleteIcon && (
+                        <IconContext.Provider
+                            value={{
+                                color: 'red',
+                                size: '16px',
+                            }}
+                        >
+                            <RiDeleteBin6Line />
+                        </IconContext.Provider>
+                    )}
                 </div>
             </div>
         </div>
     )
 }
 
-export default PendingPackage
+export default PackageCard
