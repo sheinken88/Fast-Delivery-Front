@@ -7,14 +7,30 @@ import { TbLogout } from 'react-icons/tb'
 import { IconContext } from 'react-icons'
 import Link from 'next/link'
 import { logout } from 'services/logout'
+import Swal from 'sweetalert2'
+import { useRouter } from 'next/navigation'
 
 interface BgLayoutProps {
     children: ReactNode
 }
 
 export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
+    const router = useRouter()
     const handleLogout = async () => {
-        await logout()
+        const result = await Swal.fire({
+            text: '¿Estás seguro que deseas salir?',
+            icon: 'warning',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+            showCancelButton: true,
+            confirmButtonColor: '#00EA77',
+            cancelButtonColor: '#3D1DF3',
+        })
+
+        if (result.isConfirmed) {
+            await logout()
+            router.push('/login')
+        }
     }
 
     return (
@@ -35,16 +51,14 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
                     className="cursor-pointer border-b border-transparent shadow-xl lg:shadow-2xl"
                     onClick={handleLogout}
                 >
-                    <Link href={'/login'}>
-                        <IconContext.Provider
-                            value={{
-                                color: 'white',
-                                size: '30px',
-                            }}
-                        >
-                            <TbLogout />
-                        </IconContext.Provider>
-                    </Link>
+                    <IconContext.Provider
+                        value={{
+                            color: 'white',
+                            size: '30px',
+                        }}
+                    >
+                        <TbLogout />
+                    </IconContext.Provider>
                 </div>
             </div>
             <div className="p-10 flex-grow">{children}</div>

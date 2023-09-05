@@ -74,7 +74,7 @@ const Signup = () => {
 
     return (
         <BgLayout>
-            <LayoutContainer title={'Creá tu cuenta'}>
+            <LayoutContainer backUrl="/login" title={'Creá tu cuenta'}>
                 <form onSubmit={handleSignup}>
                     <div className="mt-20">
                         <Input

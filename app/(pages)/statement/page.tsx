@@ -21,7 +21,7 @@ const Statement: React.FC = () => {
 
     const handleContinue = async (): Promise<void> => {
         if (selectedButtons.every((val) => val)) {
-            router.push('/start-shift')
+            router.push('/current-delivery')
         }
     }
 
@@ -33,8 +33,8 @@ const Statement: React.FC = () => {
 
     return (
         <BgLayout>
-            <LayoutContainer title={'Declaración Jurada'}>
-                <div className="flex flex-col gap-4 px-4 mt-4">
+            <LayoutContainer title={'Declaración Jurada'} backUrl={'/login'}>
+                <div className="flex flex-col gap-4 px-4 mt-4 mb-4">
                     {questions.map((question, index) => (
                         <div
                             className="border-2 rounded-lg py-4 px-4"
@@ -60,6 +60,7 @@ const Statement: React.FC = () => {
                             </div>
                         </div>
                     ))}
+
                     <Button
                         onClick={handleContinue}
                         disabled={!selectedButtons.every((val) => val)}

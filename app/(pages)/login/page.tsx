@@ -4,23 +4,34 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Logo from '../../../public/Capa_1.svg'
 import { login } from 'services/login'
+import { useDispatch } from 'react-redux'
+import { setCurrentUser } from 'store/slices/usersSlice'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
     const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const dispatch = useDispatch()
+    const router = useRouter()
 
-    const handleLogin = async (e: any) => {
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value)
+    }
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value)
+    }
+
+    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
-            await login(email)
-            console.log('Hola Mundo')
+            const user = await login(email, password)
+            if (user !== null && user !== undefined) {
+                dispatch(setCurrentUser(user))
+                router.push('/start-shift')
+            }
         } catch (error) {
             console.error('handleLogin error', error)
         }
-    }
-
-    const handleEmailChange = (e: any) => {
-        setEmail(e.target.value)
-        console.log('email', email)
     }
 
     return (
@@ -54,6 +65,7 @@ const Login = () => {
                         className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent"
                         id="password"
                         type="password"
+                        onChange={handlePasswordChange}
                         placeholder="Password"
                     />
                 </div>

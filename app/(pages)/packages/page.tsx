@@ -53,7 +53,10 @@ export default function Packages() {
     return (
         <BgLayout>
             <div className="text-center">
-                <LayoutContainer title={'Obtener paquetes'}>
+                <LayoutContainer
+                    title={'Obtener paquetes'}
+                    backUrl={'/start-shift'}
+                >
                     <div className="border-b-primary border-b border-dotted text-xs font-poppins p-2">
                         ¿Cuántos paquetes repartirás hoy?
                     </div>
@@ -67,7 +70,7 @@ export default function Packages() {
                         ))}
                     </div>
                 </LayoutContainer>
-                <Link href={'/current-delivery'}>
+                <Link href={'/statement'}>
                     <Button customStyle="mt-4 mx-auto block">
                         Iniciar Jornada
                     </Button>
