@@ -14,7 +14,7 @@ const Login = () => {
             await login(email)
             console.log('Hola Mundo')
         } catch (error) {
-            console.log('handleLogin error', error)
+            console.error('handleLogin error', error)
         }
     }
 

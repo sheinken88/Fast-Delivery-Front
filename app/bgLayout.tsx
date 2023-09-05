@@ -6,12 +6,17 @@ import type { ReactNode } from 'react'
 import { TbLogout } from 'react-icons/tb'
 import { IconContext } from 'react-icons'
 import Link from 'next/link'
+import { logout } from 'services/logout'
 
 interface BgLayoutProps {
     children: ReactNode
 }
 
 export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
+    const handleLogout = async () => {
+        await logout()
+    }
+
     return (
         <div className="bg-primary min-h-screen min-w-screen flex flex-col">
             <div className="flex justify-between py-3 px-4 border-b border-transparent shadow-xl lg:shadow-2xl">
@@ -26,7 +31,10 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
                     />
                 </div>
 
-                <div className="cursor-pointer border-b border-transparent shadow-xl lg:shadow-2xl">
+                <div
+                    className="cursor-pointer border-b border-transparent shadow-xl lg:shadow-2xl"
+                    onClick={handleLogout}
+                >
                     <Link href={'/login'}>
                         <IconContext.Provider
                             value={{
