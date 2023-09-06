@@ -38,14 +38,16 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
         <div className="bg-primary min-h-screen min-w-screen flex flex-col">
             <div className="flex justify-between py-3 px-4 border-b border-transparent shadow-xl lg:shadow-2xl">
                 <div className="cursor-pointer">
-                    <Image
-                        src={Logo}
-                        alt="Fast Delivery Logo"
-                        className=""
-                        width={50}
-                        height={24}
-                        priority
-                    />
+                    <Link href={'/home'}>
+                        <Image
+                            src={Logo}
+                            alt="Fast Delivery Logo"
+                            className=""
+                            width={50}
+                            height={24}
+                            priority
+                        />
+                    </Link>
                 </div>
 
                 <div
