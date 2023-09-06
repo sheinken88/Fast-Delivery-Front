@@ -69,7 +69,7 @@ export default function Packages() {
                     </div>
                 </LayoutContainer>
                 <Link href={'/statement'}>
-                    <Button customStyle="mt-4 mx-auto block">
+                    <Button type="button" customStyle="mt-4 mx-auto block">
                         Iniciar Jornada
                     </Button>
                 </Link>

@@ -7,6 +7,7 @@ import { login } from 'services/login'
 import { useDispatch } from 'react-redux'
 import { setCurrentUser } from 'store/slices/usersSlice'
 import { useRouter } from 'next/navigation'
+import Swal from 'sweetalert2'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -25,12 +26,24 @@ const Login = () => {
         e.preventDefault()
         try {
             const user = await login(email, password)
+
             if (user !== null && user !== undefined) {
                 dispatch(setCurrentUser({ ...user, username: user.username }))
                 router.push('/home')
+
+
+            if (user === null || user === undefined) {
+                await Swal.fire({
+                    text: 'Email y/o contraseña incorrectos',
+                    icon: 'error',
+                })
+            } else {
+                dispatch(setCurrentUser(user))
+                router.push('/start-shift')
+
             }
         } catch (error) {
-            console.error('Login error: ', error)
+            console.error('handleLogin error', error)
         }
     }
 

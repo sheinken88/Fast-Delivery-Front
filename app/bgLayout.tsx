@@ -6,23 +6,32 @@ import type { ReactNode } from 'react'
 import { TbLogout } from 'react-icons/tb'
 import { IconContext } from 'react-icons'
 import Link from 'next/link'
-import { useDispatch } from 'react-redux'
+import { logout } from 'services/logout'
+import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
-import { logoutUser } from '../src/store/slices/usersSlice'
-import { logoutService } from '../src/services/logout'
 
 interface BgLayoutProps {
     children: ReactNode
 }
 
 export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
-    const dispatch = useDispatch()
     const router = useRouter()
 
-    const handleLogout = () => {
-        logoutService()
-        dispatch(logoutUser())
-        router.push('/login')
+    const handleLogout = async () => {
+        const result = await Swal.fire({
+            text: '¿Estás seguro que deseas salir?',
+            icon: 'warning',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+            showCancelButton: true,
+            confirmButtonColor: '#00EA77',
+            cancelButtonColor: '#3D1DF3',
+        })
+
+        if (result.isConfirmed) {
+            localStorage.removeItem('user')
+            router.push('/login')
+        }
     }
 
     return (

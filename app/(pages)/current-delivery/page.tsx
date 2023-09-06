@@ -51,13 +51,16 @@ const CurrentDelivery = () => {
                         </div>
                     </div>
                     <Link href={'/start-shift'}>
-                        <Button>Confirmar Entrega</Button>
+                        <Button type="button">Finalizar</Button>
                     </Link>
                 </div>
             </LayoutContainer>
             <div className="py-4">
                 <Link href={'/packages'}>
-                    <Button customStyle="text-white bg-transparent border-secondary border">
+                    <Button
+                        type="button"
+                        customStyle="text-white bg-transparent border-secondary border"
+                    >
                         Cancelar entrega
                     </Button>
                 </Link>
