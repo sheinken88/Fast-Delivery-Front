@@ -26,8 +26,8 @@ const Login = () => {
         try {
             const user = await login(email, password)
             if (user !== null && user !== undefined) {
-                dispatch(setCurrentUser(user))
-                router.push('/start-shift')
+                dispatch(setCurrentUser({ ...user, username: user.username }))
+                router.push('/home')
             }
         } catch (error) {
             console.error('Login error: ', error)
