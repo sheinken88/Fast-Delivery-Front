@@ -5,6 +5,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 export interface User {
     id: string
     email: string
+    username: string
 }
 
 export interface UserState {
