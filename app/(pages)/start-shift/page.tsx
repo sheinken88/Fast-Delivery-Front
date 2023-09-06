@@ -39,7 +39,7 @@ const Jornada: React.FC = () => {
                 <Pending packages={pendingPackages} />
                 <History packages={deliveredPackages} />
                 <Link href={'/packages'}>
-                    <Button customStyle="mt-4 mx-auto block w-80">
+                    <Button type="button" customStyle="mt-4 mx-auto block w-80">
                         Obtener Paquetes
                     </Button>
                 </Link>
