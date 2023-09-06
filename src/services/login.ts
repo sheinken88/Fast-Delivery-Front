@@ -7,8 +7,8 @@ export const login = async (email: string, password: string) => {
             email,
             password,
         })
-        localStorage.setItem('jwt', response.data.token)
-        return response.data.user
+        localStorage.setItem('user', response.data)
+        return response.data
     } catch (error) {
         console.log('login service error', error)
     }

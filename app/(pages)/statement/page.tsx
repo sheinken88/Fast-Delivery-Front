@@ -62,6 +62,7 @@ const Statement: React.FC = () => {
                     ))}
 
                     <Button
+                        type="button"
                         onClick={handleContinue}
                         disabled={!selectedButtons.every((val) => val)}
                     >

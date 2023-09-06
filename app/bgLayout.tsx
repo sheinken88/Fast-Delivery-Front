@@ -16,6 +16,7 @@ interface BgLayoutProps {
 
 export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
     const router = useRouter()
+
     const handleLogout = async () => {
         const result = await Swal.fire({
             text: '¿Estás seguro que deseas salir?',
@@ -28,7 +29,7 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
         })
 
         if (result.isConfirmed) {
-            await logout()
+            localStorage.removeItem('user')
             router.push('/login')
         }
     }
