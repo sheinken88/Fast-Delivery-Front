@@ -28,19 +28,13 @@ const Login = () => {
             const user = await login(email, password)
 
             if (user !== null && user !== undefined) {
-                dispatch(setCurrentUser({ ...user, username: user.username }))
+                dispatch(setCurrentUser(user))
                 router.push('/home')
-
-
-            if (user === null || user === undefined) {
+            } else {
                 await Swal.fire({
                     text: 'Email y/o contraseña incorrectos',
                     icon: 'error',
                 })
-            } else {
-                dispatch(setCurrentUser(user))
-                router.push('/start-shift')
-
             }
         } catch (error) {
             console.error('handleLogin error', error)
