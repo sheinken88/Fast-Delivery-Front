@@ -6,7 +6,6 @@ import type { ReactNode } from 'react'
 import { TbLogout } from 'react-icons/tb'
 import { IconContext } from 'react-icons'
 import Link from 'next/link'
-import { logout } from 'services/logout'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
 
