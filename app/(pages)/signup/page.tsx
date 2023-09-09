@@ -17,6 +17,9 @@ import useInput from 'hooks/useInput'
 import { signup } from 'services/signup'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
+import { useDispatch } from 'react-redux'
+import { login } from 'services/login'
+import { setCurrentUser } from 'store/slices/usersSlice'
 
 const Signup = () => {
     const router = useRouter()
@@ -26,6 +29,7 @@ const Signup = () => {
     const email = useInput('')
     const password = useInput('')
     const confirmPassword = useInput('')
+    const dispatch = useDispatch()
 
     const togglePasswordVisibility = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword)
@@ -55,13 +59,24 @@ const Signup = () => {
                 })
                 return
             }
-            console.log('email', email.value)
-            await signup({
+            const newUser = await signup({
                 username: username.value,
                 phone_number: phoneNumber.value,
                 email: email.value,
                 password: password.value,
             })
+
+            if (newUser !== null && newUser !== undefined) {
+                const user = await login(email.value, password.value)
+                if (user !== null && user !== undefined) {
+                    dispatch(setCurrentUser(user))
+                }
+            } else {
+                await Swal.fire({
+                    text: 'Error al ingresar el usuario',
+                    icon: 'error',
+                })
+            }
             router.push('/start-shift')
         } catch (error) {
             console.error(error)
