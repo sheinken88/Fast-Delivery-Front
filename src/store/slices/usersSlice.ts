@@ -6,7 +6,7 @@ export interface User {
     id: string
     email: string
     username: string
-    phone_nummber: string
+    phone_number: string
 }
 
 export interface UserState {
