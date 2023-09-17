@@ -1,0 +1,38 @@
+name: CI/CD Workflow
+
+on:
+    push:
+        branches:
+            - develop
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run Linter
+              run: npm run lint
+
+            # Build, tag, and push Docker image
+            - name: Build Docker image
+              run: docker build -t sheinken88/fast-delivery-front:latest .
+
+            - name: Login to Docker Hub
+              run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+
+            - name: Push Docker image
+              run: docker push sheinken88/fast-delivery-front:latest
+
+            # - name: Run tests
+            #   run: npm test

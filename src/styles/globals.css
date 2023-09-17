@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "~/node_modules/leaflet/dist/leaflet.css";
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../../public/Poppins-Regular.ttf");
+}
+
+body {
+  font-family: "Poppins";
+}
