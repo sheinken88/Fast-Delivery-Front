@@ -6,6 +6,6 @@ export const signup = async (data: object) => {
         const newDriver = await axios.post(`${API_URL}/drivers/signup`, data)
         return newDriver.data
     } catch (error) {
-        console.log('signup service error', error)
+        console.error('signup service error', error)
     }
 }

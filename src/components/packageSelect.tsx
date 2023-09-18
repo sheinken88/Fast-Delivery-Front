@@ -22,7 +22,10 @@ const PackageSelect: React.FC<Props> = ({ packageInfo, order, onSelect }) => {
     }
 
     return (
-        <div className="w-full h-full flex flex-row justify-between items-center text-primary border-primary border rounded-xl bg-white p-2">
+        <div
+            className="w-full h-full flex flex-row justify-between items-center text-primary border-primary border rounded-xl bg-white p-2"
+            onClick={handleSelect}
+        >
             <div className="p-2">
                 {!isSelected ? (
                     <div
@@ -34,10 +37,7 @@ const PackageSelect: React.FC<Props> = ({ packageInfo, order, onSelect }) => {
                         </IconContext.Provider>
                     </div>
                 ) : (
-                    <div
-                        className="h-6 w-6 rounded-lg border-2 border-primary bg-customGreen flex items-center justify-center"
-                        onClick={handleSelect}
-                    >
+                    <div className="h-6 w-6 rounded-lg border-2 border-primary bg-customGreen flex items-center justify-center">
                         <IconContext.Provider value={{ className: 'icon' }}>
                             <BsCheckLg />
                         </IconContext.Provider>
