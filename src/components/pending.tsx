@@ -4,16 +4,10 @@ import type { FC } from 'react'
 import { BiSolidDownArrow } from 'react-icons/bi'
 import { IconContext } from 'react-icons'
 import PackageCard from 'commons/PackageCard'
-
-interface Package {
-    id: string
-    address: string
-    city: string
-    status: string
-}
+import type IPackage from '../../interfaces/package.interface'
 
 interface PendingProps {
-    packages: Package[]
+    packages: IPackage[]
 }
 
 export const Pending: FC<PendingProps> = ({ packages }) => {
@@ -42,7 +36,7 @@ export const Pending: FC<PendingProps> = ({ packages }) => {
             {isVisible && (
                 <div className="flex flex-col gap-4">
                     {packages.map((pkg) => (
-                        <PackageCard key={pkg.id} packageData={pkg} />
+                        <PackageCard key={pkg._id} packageData={pkg} />
                     ))}
                 </div>
             )}

@@ -17,6 +17,6 @@ export const login = async (email: string, password: string) => {
         localStorage.setItem('user', token)
         return user
     } catch (error) {
-        console.log('login service error', error)
+        console.error('login service error', error)
     }
 }

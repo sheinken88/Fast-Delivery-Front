@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from 'store/store'
 import { setPackages } from 'store/slices/packagesSlice'
-import { loadPackages } from 'services/packagesService'
+import { fetchPendingPackages } from 'services/fetchPendingPackages'
 
 interface PackageInfo {
     address: string
@@ -21,8 +21,13 @@ export default function Packages() {
     const dispatch = useDispatch()
     const packages = useSelector((state: RootState) => state.packages.packages)
 
+    const fetchPackages = async () => {
+        const packages = await fetchPendingPackages()
+        dispatch(setPackages(packages))
+    }
+
     useEffect(() => {
-        dispatch(setPackages(loadPackages()))
+        void fetchPackages()
     }, [dispatch])
 
     const handleSelect = (

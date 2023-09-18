@@ -1,6 +1,12 @@
-import { packages } from '../../fake-data/packages'
+// import { packages } from '../../fake-data/packages'
+import axios from 'axios'
+import { API_URL } from 'utils/config'
 
-// aca haríamos el fetch a la api del back
-export const loadPackages = () => {
-    return packages
+export const loadPackages = async () => {
+    try {
+        const packages = await axios.get(`${API_URL}/packages`)
+        return packages.data
+    } catch (error) {
+        console.error('loadPackages service error')
+    }
 }
