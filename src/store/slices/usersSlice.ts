@@ -3,10 +3,12 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 // import type { User } from '../../../fake-data/users'
 
 export interface User {
-    id: string
+    _id: string
     email: string
     username: string
     phone_number: string
+    profile_pic: string
+    status: boolean
 }
 
 export interface UserState {

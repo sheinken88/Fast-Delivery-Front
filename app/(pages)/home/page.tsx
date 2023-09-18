@@ -1,14 +1,16 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BgLayout } from '../../bgLayout'
 import LayoutContainer from '../../../app/layoutContainer'
 import Image from 'next/image'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from 'store/store'
 import { MenuBoxComponent } from 'components/menuBox'
 import Link from 'next/link'
+import { setCurrentUser } from 'store/slices/usersSlice'
 
 const Home: React.FC = () => {
+    const dispatch = useDispatch()
     const profileImg: string | null = null
 
     const user = useSelector((state: RootState) => state.users.currentUser)
