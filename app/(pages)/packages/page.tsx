@@ -48,8 +48,6 @@ export default function Packages() {
         else setCanContinue(false)
     }, [handleSelect])
 
-    console.log(selectedPackages)
-
     return (
         <BgLayout>
             <div className="text-center">

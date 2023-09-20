@@ -7,8 +7,10 @@ import { useSelector } from 'react-redux'
 import type { RootState } from 'store/store'
 import { MenuBoxComponent } from 'components/menuBox'
 import Link from 'next/link'
+// import { setCurrentUser } from 'store/slices/usersSlice'
 
 const Home: React.FC = () => {
+    // const dispatch = useDispatch()
     const profileImg: string | null = null
 
     const user = useSelector((state: RootState) => state.users.currentUser)
