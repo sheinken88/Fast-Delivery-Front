@@ -4,29 +4,34 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Logo from '../../../public/Capa_1.svg'
 import { login } from 'services/login'
+import { Input } from 'commons/generic/Input'
+import useInput from 'hooks/useInput'
+import {
+    AiOutlineUser,
+    AiOutlineEye,
+    AiOutlineEyeInvisible,
+} from 'react-icons/ai'
+import { HiOutlineLockClosed } from 'react-icons/hi'
 import { useDispatch } from 'react-redux'
-import { setCurrentUser } from 'store/slices/usersSlice'
+import { setCurrentUser } from '../../../src/store/slices/usersSlice'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2'
 
 const Login = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
     const dispatch = useDispatch()
     const router = useRouter()
+    const email = useInput()
+    const password = useInput()
+    const [showPassword, setShowPassword] = useState(false)
 
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value)
-    }
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value)
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword)
     }
 
-    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleLogin = async (e: any) => {
         e.preventDefault()
         try {
-            const user = await login(email, password)
-
+            const user = await login(email.value, password.value)
             if (user !== null && user !== undefined) {
                 dispatch(setCurrentUser(user))
                 router.push('/home')
@@ -58,33 +63,51 @@ const Login = () => {
                 className="rounded px-8 pt-6 pb-8 mb-4 w-96"
             >
                 <div className="mb-4">
-                    <input
-                        className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent"
-                        id="email"
-                        type="text"
-                        onChange={handleEmailChange}
-                        value={email}
+                    <Input
+                        customStyle="bg-primary text-white placeholder-white border-white rounded-lg"
                         placeholder="email@contraseña.com"
+                        type="text"
+                        iconType={
+                            <AiOutlineUser className="w-full h-full text-white" />
+                        }
+                        value={email.value}
+                        onChange={email.onChange}
                     />
                 </div>
                 <div className="mb-6">
-                    <input
+                    <Input
+                        customStyle="bg-primary text-white placeholder-white border-white rounded-lg"
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Password"
+                        value={password.value}
+                        onChange={password.onChange}
+                        iconType={
+                            <HiOutlineLockClosed className="w-full h-full text-white" />
+                        }
+                        iconTypeRight={
+                            showPassword ? (
+                                <AiOutlineEye className="w-full h-full text-white cursor-pointer" />
+                            ) : (
+                                <AiOutlineEyeInvisible className="w-full h-full text-white cursor-pointer" />
+                            )
+                        }
+                        togglePasswordVisibility={togglePasswordVisibility}
+                    />
+                    {/* <input
                         className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent"
                         id="password"
                         type="password"
                         onChange={handlePasswordChange}
                         placeholder="Password"
-                    />
+                    /> */}
                 </div>
                 <div className="flex flex-col items-center justify-between text-center">
-                    {/* <Link href={'/start-shift'}> */}
                     <button
                         className="bg-secondary text-primary py-2 w-72 rounded-3xl"
                         type="submit"
                     >
                         Ingresar
                     </button>
-                    {/* </Link> */}
                     <Link href={'/signup'}>
                         <button
                             className="border-2 border-secondary text-white whitespace-nowrap	 py-2 w-72 rounded-3xl mt-4"
