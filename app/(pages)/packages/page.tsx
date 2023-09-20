@@ -1,74 +1,93 @@
 'use client'
-import PackageCard from '../../../src/components/packageInfo'
-import React from 'react'
+import PackageSelect from 'components/packageSelect'
+import React, { useEffect, useState } from 'react'
 import LayoutContainer from '../../../app/layoutContainer'
 import { BgLayout } from '../../../app/bgLayout'
 import { Button } from '../../../src/commons/generic/Button'
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from 'store/store'
+import { setPackages } from 'store/slices/packagesSlice'
+import { fetchPendingPackages } from 'services/fetchPendingPackages'
+import type IPackage from '../../../interfaces/package.interface'
 import Link from 'next/link'
-
-interface PackageInfo {
-    address: string
-    city: string
-    quantity: number
-}
+import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
 
 export default function Packages() {
-    const packages: PackageInfo[] = [
-        {
-            address: 'Amenabar 2356',
-            city: 'CABA',
-            quantity: 2,
-        },
-        {
-            address: 'Av Carabobo y Rivadavia',
-            city: 'CABA',
-            quantity: 4,
-        },
-        {
-            address: 'Melian 1242',
-            city: 'CABA',
-            quantity: 1,
-        },
-        {
-            address: 'Castillo 670',
-            city: 'CABA',
-            quantity: 1,
-        },
-        {
-            address: 'Gorriti 4595',
-            city: 'CABA',
-            quantity: 3,
-        },
-        {
-            address: 'Av. Gral. Mosconi 1056',
-            city: 'CABA',
-            quantity: 1,
-        },
-        {
-            address: 'Tacuarí 1797',
-            city: 'CABA',
-            quantity: 1,
-        },
-    ]
+    const dispatch = useDispatch()
+    const [canContinue, setCanContinue] = useState(false)
+    const packages = useSelector((state: RootState) => state.packages.packages)
+    const selectedPackages = useSelector(
+        (state: RootState) => state.selectedPackages.packages
+    )
+
+    const fetchPackages = async () => {
+        const packages = await fetchPendingPackages()
+        dispatch(setPackages(packages))
+    }
+
+    const handleSelect = (packageInfo: IPackage, isSelected: boolean): void => {
+        let updatedSelectedPackages = [...selectedPackages]
+
+        if (isSelected) {
+            updatedSelectedPackages.push(packageInfo)
+        } else {
+            updatedSelectedPackages = updatedSelectedPackages.filter(
+                (pkg) => pkg !== packageInfo
+            )
+        }
+
+        dispatch(setSelectedPackages(updatedSelectedPackages))
+    }
+
+    useEffect(() => {
+        void fetchPackages()
+    }, [dispatch])
+
+    useEffect(() => {
+        if (selectedPackages.length > 0) setCanContinue(true)
+        else setCanContinue(false)
+    }, [handleSelect])
+
     return (
         <BgLayout>
             <div className="text-center">
-                <LayoutContainer title={'Obtener paquetes'}>
+                <LayoutContainer
+                    title={'Obtener paquetes'}
+                    backUrl={'/start-shift'}
+                >
                     <div className="border-b-primary border-b border-dotted text-xs font-poppins p-2">
                         ¿Cuántos paquetes repartirás hoy?
                     </div>
                     <br />
                     <div className="flex flex-col gap-2 p-2 rounded-lg">
                         {packages.map((packageInfo, index) => (
-                            <PackageCard
+                            <PackageSelect
                                 key={index}
                                 packageInfo={packageInfo}
+                                order={
+                                    selectedPackages.indexOf(packageInfo) + 1
+                                }
+                                onSelect={(isSelected) => {
+                                    handleSelect(packageInfo, isSelected)
+                                }}
                             />
                         ))}
                     </div>
                 </LayoutContainer>
-                <Link href={'/current-delivery'}>
-                    <Button customStyle="mt-4 mx-auto block">
+
+                <Link
+                    href={{
+                        pathname: '/statement',
+                        query: { packages: JSON.stringify(selectedPackages) },
+                    }}
+                >
+                    <Button
+                        type="button"
+                        customStyle={`mt-4 mx-auto block ${
+                            !canContinue ? 'black-button' : ''
+                        }`}
+                        disabled={!canContinue}
+                    >
                         Iniciar Jornada
                     </Button>
                 </Link>

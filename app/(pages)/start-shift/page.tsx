@@ -1,86 +1,34 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import { Pending } from '../../../src/components/pending'
 import { History } from '../../../src/components/history'
 import { BgLayout } from '../../bgLayout'
 import Link from 'next/link'
-
-export interface Package {
-    id: string
-    address: string
-    city: string
-    status: string
-}
+import { Button } from 'commons/generic/Button'
+import { useDispatch } from 'react-redux'
+import type IPackage from '../../../interfaces/package.interface'
+import { fetchPendingPackages } from 'services/fetchPendingPackages'
+import { fetchDeliveredPackages } from 'services/fetchDeliveredPackages'
 
 const Jornada: React.FC = () => {
-    const packages: Package[] = [
-        {
-            id: 'PKG12345',
-            address: 'Av. Corrientes 123',
-            city: 'Buenos Aires',
-            status: 'en curso',
-        },
-        {
-            id: 'PKG98765',
-            address: 'Calle Florida 456',
-            city: 'Buenos Aires',
-            status: 'entregado',
-        },
-        {
-            id: 'PKG24680',
-            address: 'Av. Santa Fe 789',
-            city: 'Córdoba',
-            status: 'pendiente',
-        },
-        {
-            id: 'PKG13579',
-            address: 'Av. Belgrano 321',
-            city: 'Rosario',
-            status: 'en curso',
-        },
-        {
-            id: 'PKG86420',
-            address: 'Calle Lavalle 987',
-            city: 'Buenos Aires',
-            status: 'pendiente',
-        },
-        {
-            id: 'PKG64237',
-            address: 'Av. 9 de Julio 753',
-            city: 'Buenos Aires',
-            status: 'entregado',
-        },
-        {
-            id: 'PKG19283',
-            address: 'Calle Mitre 159',
-            city: 'La Plata',
-            status: 'en curso',
-        },
-        {
-            id: 'PKG37482',
-            address: 'Av. San Martín 258',
-            city: 'Mendoza',
-            status: 'pendiente',
-        },
-        {
-            id: 'PKG50673',
-            address: 'Calle San Juan 456',
-            city: 'Salta',
-            status: 'entregado',
-        },
-        {
-            id: 'PKG92073',
-            address: 'Av. Rivadavia 753',
-            city: 'Buenos Aires',
-            status: 'en curso',
-        },
-    ]
+    // const user = useSelector((state: RootState) => state.users.currentUser)
+    const dispatch = useDispatch()
+    const [pendingPackages, setPendingPackages] = useState<IPackage[]>([])
+    const [deliveredPackages, setDeliveredPackages] = useState<IPackage[]>([])
 
-    const pendingPackages = packages.filter(
-        (pkg) => pkg.status === 'pendiente' || pkg.status === 'en curso'
-    )
-    const deliveredPackages = packages.filter(
-        (pkg) => pkg.status === 'entregado'
-    )
+    const fetchPackages = async () => {
+        try {
+            const pending = await fetchPendingPackages()
+            const delivered = await fetchDeliveredPackages()
+            setPendingPackages(pending)
+            setDeliveredPackages(delivered)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    useEffect(() => {
+        void fetchPackages()
+    }, [dispatch])
 
     return (
         <BgLayout>
@@ -88,9 +36,9 @@ const Jornada: React.FC = () => {
                 <Pending packages={pendingPackages} />
                 <History packages={deliveredPackages} />
                 <Link href={'/packages'}>
-                    <button className="bg-secondary px-6 py-1 rounded-full text-primary mt-4">
-                        Obtener paquetes
-                    </button>
+                    <Button type="button" customStyle="mt-4 mx-auto block w-80">
+                        Obtener Paquetes
+                    </Button>
                 </Link>
             </div>
         </BgLayout>

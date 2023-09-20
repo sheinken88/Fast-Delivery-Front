@@ -5,20 +5,24 @@ import { PiPackageLight } from 'react-icons/pi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 
 interface Package {
-    id: string
+    _id: string
     address: string
     city: string
     status: string
 }
 
-interface PendingPackageProps {
+interface PackageCardProps {
     packageData: Package
+    showDeleteIcon?: boolean
 }
 
-const PendingPackage: FC<PendingPackageProps> = ({ packageData }) => {
+const PackageCard: FC<PackageCardProps> = ({
+    packageData,
+    showDeleteIcon = true,
+}) => {
     return (
         <div
-            key={packageData.id}
+            key={packageData._id}
             className="flex items-center gap-4 border border-primary rounded-lg p-2"
         >
             <div id="cajita">
@@ -33,7 +37,15 @@ const PendingPackage: FC<PendingPackageProps> = ({ packageData }) => {
             </div>
             <div id="info pkg" className="flex flex-col w-full">
                 <div className="flex justify-between text-primary font-bold text-xs">
-                    <p>#{packageData.id}</p>
+                    <p>
+                        #
+                        {packageData._id
+                            .toUpperCase()
+                            .substring(
+                                packageData._id.length - 5,
+                                packageData._id.length
+                            )}
+                    </p>
                     {packageData.status === 'en curso' ? (
                         <p className="bg-customYellow px-3 rounded-full">
                             EN CURSO
@@ -49,18 +61,20 @@ const PendingPackage: FC<PendingPackageProps> = ({ packageData }) => {
                         <p>{packageData.address},</p>
                         <p>{packageData.city}</p>
                     </div>
-                    <IconContext.Provider
-                        value={{
-                            color: 'red',
-                            size: '16px',
-                        }}
-                    >
-                        <RiDeleteBin6Line />
-                    </IconContext.Provider>
+                    {showDeleteIcon && (
+                        <IconContext.Provider
+                            value={{
+                                color: 'red',
+                                size: '16px',
+                            }}
+                        >
+                            <RiDeleteBin6Line />
+                        </IconContext.Provider>
+                    )}
                 </div>
             </div>
         </div>
     )
 }
 
-export default PendingPackage
+export default PackageCard

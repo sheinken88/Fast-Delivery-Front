@@ -2,18 +2,12 @@
 import React, { useState } from 'react'
 import type { FC } from 'react'
 import { BiSolidDownArrow } from 'react-icons/bi'
-import PendingPkg from '../commons/PendingPkg'
 import { IconContext } from 'react-icons'
-
-interface Package {
-    id: string
-    address: string
-    city: string
-    status: string
-}
+import PackageCard from 'commons/PackageCard'
+import type IPackage from '../../interfaces/package.interface'
 
 interface DeliveredProps {
-    packages: Package[]
+    packages: IPackage[]
 }
 
 export const History: FC<DeliveredProps> = ({ packages }) => {
@@ -45,7 +39,11 @@ export const History: FC<DeliveredProps> = ({ packages }) => {
             {isVisible && (
                 <div className="flex flex-col gap-4">
                     {packages.map((pkg) => (
-                        <PendingPkg key={pkg.id} packageData={pkg} />
+                        <PackageCard
+                            key={pkg._id}
+                            packageData={pkg}
+                            showDeleteIcon={false}
+                        />
                     ))}
                 </div>
             )}

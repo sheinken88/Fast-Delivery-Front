@@ -5,17 +5,23 @@ import Link from 'next/link'
 import Logo from '../../../public/Capa_1.svg'
 import { login } from 'services/login'
 import { Input } from 'commons/generic/Input'
+import useInput from 'hooks/useInput'
 import {
     AiOutlineUser,
-    AiOutlineLock,
     AiOutlineEye,
     AiOutlineEyeInvisible,
 } from 'react-icons/ai'
-import { TfiLock } from 'react-icons/tfi'
 import { HiOutlineLockClosed } from 'react-icons/hi'
+import { useDispatch } from 'react-redux'
+import { setCurrentUser } from '../../../src/store/slices/usersSlice'
+import { useRouter } from 'next/navigation'
+import Swal from 'sweetalert2'
 
 const Login = () => {
-    const [email, setEmail] = useState('')
+    const dispatch = useDispatch()
+    const router = useRouter()
+    const email = useInput()
+    const password = useInput()
     const [showPassword, setShowPassword] = useState(false)
 
     const togglePasswordVisibility = () => {
@@ -25,16 +31,19 @@ const Login = () => {
     const handleLogin = async (e: any) => {
         e.preventDefault()
         try {
-            await login(email)
-            console.log('Hola Mundo')
+            const user = await login(email.value, password.value)
+            if (user !== null && user !== undefined) {
+                dispatch(setCurrentUser(user))
+                router.push('/home')
+            } else {
+                await Swal.fire({
+                    text: 'Email y/o contraseña incorrectos',
+                    icon: 'error',
+                })
+            }
         } catch (error) {
-            console.log('handleLogin error', error)
+            console.error('handleLogin error', error)
         }
-    }
-
-    const handleEmailChange = (e: any) => {
-        setEmail(e.target.value)
-        console.log('email', email)
     }
 
     return (
@@ -61,21 +70,17 @@ const Login = () => {
                         iconType={
                             <AiOutlineUser className="w-full h-full text-white" />
                         }
+                        value={email.value}
+                        onChange={email.onChange}
                     />
-                    {/* <input
-                        className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent"
-                        id="email"
-                        type="text"
-                        onChange={handleEmailChange}
-                        value={email}
-                        placeholder="email@contraseña.com"
-                    /> */}
                 </div>
                 <div className="mb-6">
                     <Input
                         customStyle="bg-primary text-white placeholder-white border-white rounded-lg"
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Password"
+                        value={password.value}
+                        onChange={password.onChange}
                         iconType={
                             <HiOutlineLockClosed className="w-full h-full text-white" />
                         }
@@ -92,6 +97,7 @@ const Login = () => {
                         className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent"
                         id="password"
                         type="password"
+                        onChange={handlePasswordChange}
                         placeholder="Password"
                     /> */}
                 </div>
