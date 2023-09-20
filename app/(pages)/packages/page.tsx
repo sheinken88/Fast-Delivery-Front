@@ -4,36 +4,28 @@ import React, { useEffect, useState } from 'react'
 import LayoutContainer from '../../../app/layoutContainer'
 import { BgLayout } from '../../../app/bgLayout'
 import { Button } from '../../../src/commons/generic/Button'
-import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from 'store/store'
 import { setPackages } from 'store/slices/packagesSlice'
 import { fetchPendingPackages } from 'services/fetchPendingPackages'
-
-interface PackageInfo {
-    address: string
-    city: string
-}
+import type IPackage from '../../../interfaces/package.interface'
+import Link from 'next/link'
+import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
 
 export default function Packages() {
-    const [selectedPackages, setSelectedPackages] = useState<PackageInfo[]>([])
-
     const dispatch = useDispatch()
+    const [canContinue, setCanContinue] = useState(false)
     const packages = useSelector((state: RootState) => state.packages.packages)
+    const selectedPackages = useSelector(
+        (state: RootState) => state.selectedPackages.packages
+    )
 
     const fetchPackages = async () => {
         const packages = await fetchPendingPackages()
         dispatch(setPackages(packages))
     }
 
-    useEffect(() => {
-        void fetchPackages()
-    }, [dispatch])
-
-    const handleSelect = (
-        packageInfo: PackageInfo,
-        isSelected: boolean
-    ): void => {
+    const handleSelect = (packageInfo: IPackage, isSelected: boolean): void => {
         let updatedSelectedPackages = [...selectedPackages]
 
         if (isSelected) {
@@ -44,8 +36,19 @@ export default function Packages() {
             )
         }
 
-        setSelectedPackages(updatedSelectedPackages)
+        dispatch(setSelectedPackages(updatedSelectedPackages))
     }
+
+    useEffect(() => {
+        void fetchPackages()
+    }, [dispatch])
+
+    useEffect(() => {
+        if (selectedPackages.length > 0) setCanContinue(true)
+        else setCanContinue(false)
+    }, [handleSelect])
+
+    console.log(selectedPackages)
 
     return (
         <BgLayout>
@@ -73,8 +76,20 @@ export default function Packages() {
                         ))}
                     </div>
                 </LayoutContainer>
-                <Link href={'/statement'}>
-                    <Button type="button" customStyle="mt-4 mx-auto block">
+
+                <Link
+                    href={{
+                        pathname: '/statement',
+                        query: { packages: JSON.stringify(selectedPackages) },
+                    }}
+                >
+                    <Button
+                        type="button"
+                        customStyle={`mt-4 mx-auto block ${
+                            !canContinue ? 'black-button' : ''
+                        }`}
+                        disabled={!canContinue}
+                    >
                         Iniciar Jornada
                     </Button>
                 </Link>

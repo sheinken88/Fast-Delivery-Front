@@ -1,13 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "~/node_modules/leaflet/dist/leaflet.css";
+@import '~/node_modules/leaflet/dist/leaflet.css';
 
 @font-face {
-  font-family: "Poppins";
-  src: url("../../public/Poppins-Regular.ttf");
+    font-family: 'Poppins';
+    src: url('../../public/Poppins-Regular.ttf');
 }
 
 body {
-  font-family: "Poppins";
+    font-family: 'Poppins';
+}
+
+.black-button{
+    background-color: grey;
+    color: black;
 }

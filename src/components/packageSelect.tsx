@@ -1,19 +1,13 @@
 import React, { useState } from 'react'
 import { BsCheckLg } from 'react-icons/bs'
 import { IconContext } from 'react-icons'
+import type PackageSelectProps from '../../interfaces/props/packageSelectProps.interface'
 
-interface PackageInfo {
-    address: string
-    city: string
-}
-
-interface Props {
-    packageInfo: PackageInfo
-    order: number | null
-    onSelect: (isSelected: boolean) => void
-}
-
-const PackageSelect: React.FC<Props> = ({ packageInfo, order, onSelect }) => {
+const PackageSelect: React.FC<PackageSelectProps> = ({
+    packageInfo,
+    order,
+    onSelect,
+}) => {
     const [isSelected, setIsSelected] = useState(false)
 
     const handleSelect = () => {

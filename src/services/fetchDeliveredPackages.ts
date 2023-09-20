@@ -6,6 +6,6 @@ export const fetchDeliveredPackages = async () => {
         const packages = await axios.get(`${API_URL}/packages/delivered`)
         return packages.data
     } catch (error) {
-        console.error('fetchPendingPackages service error')
+        console.error('fetchDeliveredPackages service error')
     }
 }

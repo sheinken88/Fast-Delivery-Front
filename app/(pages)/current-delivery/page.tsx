@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import LayoutContainer from '../../layoutContainer'
 import { Button } from '../../../src/commons/generic/Button'
 import Link from 'next/link'
+import type IPackage from '../../../interfaces/package.interface'
 
 const MapComponent = dynamic(
     async () =>
@@ -14,21 +15,15 @@ const MapComponent = dynamic(
     { ssr: false }
 )
 
-interface Package {
-    id: string
-    address: string
-    city: string
-    quantity: number
-    receiver: string
-}
-
 const CurrentDelivery = () => {
-    const packageInfo: Package = {
-        id: '#0A235',
+    const packageInfo: IPackage = {
+        _id: '#0A235',
+        status: 'in progress',
+        receiver_name: 'David Rodriguez',
         address: 'Amenabar 2356',
         city: 'CABA',
         quantity: 2,
-        receiver: 'David Rodriguez',
+        weight: 15.2,
     }
 
     return (
@@ -43,11 +38,11 @@ const CurrentDelivery = () => {
                         </div>
                         <div className="py-2">
                             <strong>Número de paquete: </strong>
-                            {packageInfo.id}
+                            {packageInfo._id}
                         </div>
                         <div className="py-2">
                             <strong>Recibe: </strong>
-                            {packageInfo.receiver}
+                            {packageInfo.receiver_name}
                         </div>
                     </div>
                     <Link href={'/start-shift'}>
