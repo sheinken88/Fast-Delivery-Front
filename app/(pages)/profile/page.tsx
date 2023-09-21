@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import { BgLayout } from '../../bgLayout'
 import LayoutContainer from '../../../app/layoutContainer'
 import Image from 'next/image'
@@ -8,58 +8,54 @@ import type { RootState } from 'store/store'
 import { FaEdit } from 'react-icons/fa'
 import { Button } from 'commons/generic/Button'
 import { updateUserProfile } from 'services/updateUserProfile'
+import useInput from 'hooks/useInput'
+import Swal from 'sweetalert2'
 
 export interface FormValues {
-    username: string | null
-    email: string | null
-    phone_number: string | null
+    username: string | undefined
+    email: string | undefined
+    phone_number: string | undefined
+    profile_pic: string | undefined
 }
 
 const Profile: React.FC = () => {
-    const profileImg: string | null = null
     const user = useSelector((state: RootState) => state.users.currentUser)
+    const username = useInput(user != null ? user.username : '')
+    const email = useInput(user != null ? user.email : '')
+    const phoneNumber = useInput(user != null ? user.phone_number : '')
+    const profilePic = useInput(user != null ? user.profile_pic : '')
 
-    const [formValues, setFormValues] = useState<FormValues>({
-        username: user?.username ?? '',
-        email: user?.email ?? '',
-        phone_number: user?.phone_number ?? '',
-    })
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
-
-        setFormValues((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }))
-    }
-
-    const handleFormSubmit = async (e: React.FormEvent) => {
-        console.log('handleFormSubmit called')
-        console.log('Form submitted with values: ', formValues)
-
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log('user._id value:', user?._id)
-
-        if (user?._id !== undefined) {
-            console.log(
-                'User ID is defined, attempting to call updateUserProfile'
-            )
-
-            try {
-                await updateUserProfile(user._id, formValues)
-                alert('Profile updated successfully!')
-            } catch (error) {
-                console.error('Error updating profile', error)
-                alert('Failed to update profile. Please try again later.')
+        try {
+            const userData: FormValues = {
+                username: username.value,
+                email: email.value,
+                phone_number: phoneNumber.value,
+                profile_pic: profilePic.value,
             }
+            if (user != null) {
+                await updateUserProfile(user._id, userData)
+                await Swal.fire({
+                    text: 'Profile updated successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                })
+            }
+        } catch (error) {
+            console.error('Error updating profile', error)
+            await Swal.fire({
+                text: 'Failed to update profile. Please try again later.',
+                icon: 'error',
+                confirmButtonText: 'Ok',
+            })
         }
     }
 
     return (
         <BgLayout>
             <LayoutContainer title={'Profile'} backUrl={'/home'}>
-                <form onSubmit={handleFormSubmit}>
+                <form onSubmit={handleSubmit}>
                     <p className="font-semibold mt-10 px-4 mb-4">
                         EDITAR PERFIL
                     </p>
@@ -72,7 +68,11 @@ const Profile: React.FC = () => {
                             height={64}
                             width={64}
                             alt="Profile Picture"
-                            src={profileImg ?? '/empty_profile_pic.jpg'}
+                            src={
+                                profilePic.value !== ''
+                                    ? profilePic.value
+                                    : '/generic-user.png'
+                            }
                         />
                     </div>
                     <div className="mt-4 border-b border-b-gray-200 pb-4 px-4">
@@ -81,10 +81,8 @@ const Profile: React.FC = () => {
                             <input
                                 type="text"
                                 name="username"
-                                value={
-                                    formValues.username ?? user?.username ?? ''
-                                }
-                                onChange={handleInputChange}
+                                value={username.value}
+                                onChange={username.onChange}
                                 className="border rounded w-full py-2 px-3"
                             />
                             <FaEdit className="text-xl text-primary cursor-pointer" />
@@ -96,8 +94,8 @@ const Profile: React.FC = () => {
                             <input
                                 type="email"
                                 name="email"
-                                value={formValues.email ?? user?.email ?? ''}
-                                onChange={handleInputChange}
+                                value={email.value}
+                                onChange={email.onChange}
                                 className="border rounded w-full py-2 px-3"
                             />
                             <FaEdit className="text-xl text-primary cursor-pointer" />
@@ -109,12 +107,8 @@ const Profile: React.FC = () => {
                             <input
                                 type="text"
                                 name="phone_number"
-                                value={
-                                    formValues.phone_number ??
-                                    user?.phone_number ??
-                                    ''
-                                }
-                                onChange={handleInputChange}
+                                value={phoneNumber.value}
+                                onChange={phoneNumber.onChange}
                                 className="border rounded w-full py-2 px-3"
                             />
                             <FaEdit className="text-xl text-primary cursor-pointer" />
