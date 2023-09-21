@@ -18,7 +18,6 @@ export interface FormValues {
 const Profile: React.FC = () => {
     const profileImg: string | null = null
     const user = useSelector((state: RootState) => state.users.currentUser)
-    console.log('user: ', user)
 
     const [formValues, setFormValues] = useState<FormValues>({
         username: user?.username ?? '',

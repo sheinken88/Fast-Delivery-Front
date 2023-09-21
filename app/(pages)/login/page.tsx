@@ -20,8 +20,8 @@ import Swal from 'sweetalert2'
 const Login = () => {
     const dispatch = useDispatch()
     const router = useRouter()
-    const email = useInput()
-    const password = useInput()
+    const email = useInput('')
+    const password = useInput('')
     const [showPassword, setShowPassword] = useState(false)
 
     const togglePasswordVisibility = () => {

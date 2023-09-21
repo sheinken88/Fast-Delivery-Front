@@ -8,6 +8,10 @@ import { IconContext } from 'react-icons'
 import Link from 'next/link'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { persistence } from 'services/persistence'
+import { useDispatch } from 'react-redux'
+import { type User, setCurrentUser } from 'store/slices/usersSlice'
 
 interface BgLayoutProps {
     children: ReactNode
@@ -15,6 +19,7 @@ interface BgLayoutProps {
 
 export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
     const router = useRouter()
+    const dispatch = useDispatch()
 
     const handleLogout = async () => {
         const result = await Swal.fire({
@@ -32,6 +37,21 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
             router.push('/login')
         }
     }
+
+    useEffect(() => {
+        const fetchUserByToken = async () => {
+            try {
+                const userToken: User = await persistence()
+                if (userToken != null) {
+                    dispatch(setCurrentUser(userToken))
+                }
+            } catch (error) {
+                console.error('Error al obtener el usuario:', error)
+            }
+        }
+
+        void fetchUserByToken()
+    }, [])
 
     return (
         <div className="bg-primary min-h-screen min-w-screen flex flex-col">
