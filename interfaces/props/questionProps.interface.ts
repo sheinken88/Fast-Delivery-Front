@@ -1,4 +1,4 @@
 export default interface QuestionProps {
     index: number
-    handleClick: () => void
+    handleClick: (index: number, isNo: boolean) => void
 }

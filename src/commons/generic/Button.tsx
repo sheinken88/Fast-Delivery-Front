@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface ButtonProps {
-    customStyle: string
+    customStyle?: string
     children: string
     onClick?: () => void | Promise<void>
     disabled?: boolean
@@ -18,8 +18,8 @@ export const Button: React.FC<ButtonProps> = ({
     return (
         <button
             className={`relative py-2 w-full rounded-3xl bg-secondary text-primary ${
-                customStyle !== '' ? customStyle : ''
-            } `}
+                customStyle ?? ''
+            }`}
             type={type === 'button' ? 'button' : 'submit'}
             style={{ maxWidth: '100%' }}
             onClick={onClick}

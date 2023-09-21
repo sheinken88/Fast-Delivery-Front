@@ -6,16 +6,11 @@ import { Button } from 'commons/generic/Button'
 import { useRouter } from 'next/navigation'
 import { createOrder } from 'services/createOrder'
 import { Question } from 'components/question'
-import type IPackage from '../../../interfaces/package.interface'
 import { useDispatch, useSelector } from 'react-redux'
 import { type RootState } from 'store/store'
 import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
 
-interface SelectedPackages {
-    selectedPackages: IPackage[]
-}
-
-const Statement: React.FC<SelectedPackages> = () => {
+const Statement: React.FC = () => {
     const router = useRouter()
     const dispatch = useDispatch()
     const selectedPackages = useSelector(
@@ -26,6 +21,7 @@ const Statement: React.FC<SelectedPackages> = () => {
         false,
         false,
     ])
+
     const [canContinue, setCanContinue] = useState(false)
 
     const handleClick = (index: number, isNo: boolean): void => {

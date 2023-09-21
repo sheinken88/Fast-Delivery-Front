@@ -4,7 +4,7 @@ import type { FC } from 'react'
 import { BiSolidDownArrow } from 'react-icons/bi'
 import { IconContext } from 'react-icons'
 import PackageCard from 'commons/PackageCard'
-import type PendingProps from '../../interfaces/pendingProps.interface'
+import type PendingProps from '../../interfaces/props/pendingProps.interface'
 
 export const Pending: FC<PendingProps> = ({ packages }) => {
     const [isVisible, setIsVisible] = useState(true)
