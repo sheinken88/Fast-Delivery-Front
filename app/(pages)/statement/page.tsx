@@ -17,6 +17,7 @@ const Statement: React.FC = () => {
     const selectedPackages = useSelector(
         (state: RootState) => state.selectedPackages.packages
     )
+
     const [selectedButtons, setSelectedButtons] = useState<boolean[]>([
         false,
         false,
@@ -39,9 +40,8 @@ const Statement: React.FC = () => {
 
     const orderCreation = async () => {
         try {
-            const currentDelivery = await createOrder(selectedPackages)
-            dispatch(setCurrentDelivery(selectedPackages))
-            console.log('orders selectedPackages', selectedPackages)
+            const createdOrder = await createOrder(selectedPackages)
+            dispatch(setCurrentDelivery(createdOrder.packages))
         } catch (error) {
             console.error('createOrder component error', error)
         }

@@ -20,8 +20,7 @@ const CurrentDelivery = () => {
     const currentDelivery = useSelector(
         (state: RootState) => state.currentDelivery
     )
-    const selectedPackages = currentDelivery
-    const packageInfo = selectedPackages[0]
+    const packageInfo = currentDelivery[0]
 
     return (
         <BgLayout>
@@ -31,15 +30,15 @@ const CurrentDelivery = () => {
                         <MapComponent />
                         <div className="py-2">
                             <strong>Destino: </strong>
-                            {packageInfo.address}, {packageInfo.city}
+                            {packageInfo?.address}, {packageInfo?.city}
                         </div>
                         <div className="py-2">
                             <strong>Número de paquete: </strong>
-                            {packageInfo._id}
+                            {packageInfo?._id}
                         </div>
                         <div className="py-2">
                             <strong>Recibe: </strong>
-                            {packageInfo.receiver_name}
+                            {packageInfo?.receiver_name}
                         </div>
                     </div>
                     <Link href={'/start-shift'}>

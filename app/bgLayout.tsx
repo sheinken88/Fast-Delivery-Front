@@ -51,7 +51,7 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
 
     useEffect(() => {
         void fetchUserByToken()
-    }, [children])
+    }, [])
 
     return (
         <div className="bg-primary min-h-screen min-w-screen flex flex-col">
