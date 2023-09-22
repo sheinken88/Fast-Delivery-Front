@@ -18,7 +18,7 @@ const Home: React.FC = () => {
     const [isEnabled, setIsEnabled] = useState(false)
 
     useEffect(() => {
-        if (currentDelivery[0] !== null) setIsEnabled(true)
+        if (currentDelivery[0]) setIsEnabled(true)
         else setIsEnabled(false)
     }, [])
 
@@ -43,15 +43,24 @@ const Home: React.FC = () => {
                 <p className="font-semibold mt-10 px-4">Menu</p>
                 <div className="grid grid-cols-2 gap-4 p-4 mt-6">
                     <Link href={'/profile'}>
-                        <MenuBoxComponent title={'Perfil'} icon={'FaUserAlt'} />
+                        <MenuBoxComponent
+                            title={'Perfil'}
+                            icon={'FaUserAlt'}
+                            isEnabled={true}
+                        />
                     </Link>
                     <Link href={'/start-shift'}>
-                        <MenuBoxComponent title={'Jornada'} icon={'FaTasks'} />
+                        <MenuBoxComponent
+                            title={'Jornada'}
+                            icon={'FaTasks'}
+                            isEnabled={true}
+                        />
                     </Link>
                     <Link href={'/packages'}>
                         <MenuBoxComponent
                             title={'Paquetes'}
                             icon={'PiPackageLight'}
+                            isEnabled={true}
                         />
                     </Link>
                     <Link href={'/current-delivery'}>

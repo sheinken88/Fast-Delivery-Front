@@ -9,10 +9,11 @@ import type { RootState } from 'store/store'
 import { setPackages } from 'store/slices/packagesSlice'
 import { fetchPendingPackages } from 'services/fetchPendingPackages'
 import type IPackage from '../../../interfaces/package.interface'
-import Link from 'next/link'
 import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
+import { useRouter } from 'next/navigation'
 
 export default function Packages() {
+    const router = useRouter()
     const dispatch = useDispatch()
     const [canContinue, setCanContinue] = useState(false)
     const packages = useSelector((state: RootState) => state.packages.packages)
@@ -37,6 +38,9 @@ export default function Packages() {
         }
 
         dispatch(setSelectedPackages(updatedSelectedPackages))
+    }
+    const handleContinue = () => {
+        router.push('/statement')
     }
 
     useEffect(() => {
@@ -74,23 +78,16 @@ export default function Packages() {
                         ))}
                     </div>
                 </LayoutContainer>
-
-                <Link
-                    href={{
-                        pathname: '/statement',
-                        query: { packages: JSON.stringify(selectedPackages) },
-                    }}
+                <Button
+                    onClick={handleContinue}
+                    type="button"
+                    customStyle={`mt-4 mx-auto block ${
+                        !canContinue ? 'black-button' : ''
+                    }`}
+                    disabled={!canContinue}
                 >
-                    <Button
-                        type="button"
-                        customStyle={`mt-4 mx-auto block ${
-                            !canContinue ? 'black-button' : ''
-                        }`}
-                        disabled={!canContinue}
-                    >
-                        Iniciar Jornada
-                    </Button>
-                </Link>
+                    Iniciar Jornada
+                </Button>
             </div>
         </BgLayout>
     )

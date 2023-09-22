@@ -1,3 +1,5 @@
 tailwind.config.js
 jest.config.js
 jest.setup.js
+app/(pages)/home/page.tsx
+src/components/menuBox.tsx

@@ -14,7 +14,7 @@ const iconMap = {
 export const MenuBoxComponent: React.FC<MenuProps> = ({
     icon,
     title,
-    isEnabled = true,
+    isEnabled,
 }) => {
     return (
         <button
