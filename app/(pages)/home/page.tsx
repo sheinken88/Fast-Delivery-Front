@@ -18,7 +18,7 @@ const Home: React.FC = () => {
     const [isEnabled, setIsEnabled] = useState(false)
 
     useEffect(() => {
-        if (currentDelivery[0]) setIsEnabled(true)
+        if (currentDelivery.length > 0) setIsEnabled(true)
         else setIsEnabled(false)
     }, [])
 
