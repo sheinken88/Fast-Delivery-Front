@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BgLayout } from '../../bgLayout'
 import LayoutContainer from '../../../app/layoutContainer'
 import Image from 'next/image'
@@ -7,13 +7,20 @@ import { useSelector } from 'react-redux'
 import type { RootState } from 'store/store'
 import { MenuBoxComponent } from 'components/menuBox'
 import Link from 'next/link'
-// import { setCurrentUser } from 'store/slices/usersSlice'
 
 const Home: React.FC = () => {
-    // const dispatch = useDispatch()
     const profileImg: string | null = null
 
     const user = useSelector((state: RootState) => state.users.currentUser)
+    const currentDelivery = useSelector(
+        (state: RootState) => state.currentDelivery
+    )
+    const [isEnabled, setIsEnabled] = useState(false)
+
+    useEffect(() => {
+        if (currentDelivery[0] !== null) setIsEnabled(true)
+        else setIsEnabled(false)
+    }, [])
 
     return (
         <BgLayout>
@@ -27,8 +34,10 @@ const Home: React.FC = () => {
                         src={profileImg ?? '/empty_profile_pic.jpg'}
                     />
                     <div className="flex flex-col ml-4">
-                        <p className="font-semibold">¡Hola {user?.username}!</p>
-                        <p className="text-sm">Estos son lospedidos del día</p>
+                        <p className="font-semibold">
+                            ¡Hola {user?.username.split(' ')[0].toString()}!
+                        </p>
+                        <p className="text-sm">Estos son los pedidos del día</p>
                     </div>
                 </div>
                 <p className="font-semibold mt-10 px-4">Menu</p>
@@ -47,6 +56,7 @@ const Home: React.FC = () => {
                     </Link>
                     <Link href={'/current-delivery'}>
                         <MenuBoxComponent
+                            isEnabled={isEnabled}
                             title={'En Curso'}
                             icon={'FaMapMarked'}
                         />

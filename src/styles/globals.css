@@ -12,7 +12,12 @@ body {
     font-family: 'Poppins';
 }
 
-.black-button{
+.black-button {
     background-color: grey;
     color: black;
+}
+
+.grey-button {
+    background-color: lightgrey;
+    color: grey;
 }

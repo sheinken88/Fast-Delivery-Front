@@ -11,11 +11,20 @@ const iconMap = {
     FaMapMarked: <FaMapMarked />,
 }
 
-export const MenuBoxComponent: React.FC<MenuProps> = ({ icon, title }) => {
+export const MenuBoxComponent: React.FC<MenuProps> = ({
+    icon,
+    title,
+    isEnabled = true,
+}) => {
     return (
-        <div className="flex items-center p-4 bg-customGreen rounded-lg shadow-md">
+        <button
+            className={`flex items-center w-full h-12 p-4 rounded-lg shadow-md ${
+                isEnabled ? 'bg-customGreen' : 'grey-button'
+            }`}
+            disabled={!isEnabled}
+        >
             <div className="mr-4">{iconMap[icon]}</div>
             <div className="font-semibold">{title}</div>
-        </div>
+        </button>
     )
 }

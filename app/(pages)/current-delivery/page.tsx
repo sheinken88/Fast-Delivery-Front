@@ -5,7 +5,8 @@ import dynamic from 'next/dynamic'
 import LayoutContainer from '../../layoutContainer'
 import { Button } from '../../../src/commons/generic/Button'
 import Link from 'next/link'
-import type IPackage from '../../../interfaces/package.interface'
+import { useSelector } from 'react-redux'
+import { type RootState } from 'store/store'
 
 const MapComponent = dynamic(
     async () =>
@@ -16,15 +17,11 @@ const MapComponent = dynamic(
 )
 
 const CurrentDelivery = () => {
-    const packageInfo: IPackage = {
-        _id: '#0A235',
-        status: 'in progress',
-        receiver_name: 'David Rodriguez',
-        address: 'Amenabar 2356',
-        city: 'CABA',
-        quantity: 2,
-        weight: 15.2,
-    }
+    const currentDelivery = useSelector(
+        (state: RootState) => state.currentDelivery
+    )
+    const selectedPackages = currentDelivery
+    const packageInfo = selectedPackages[0]
 
     return (
         <BgLayout>
