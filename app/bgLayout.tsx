@@ -38,20 +38,20 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
         }
     }
 
-    useEffect(() => {
-        const fetchUserByToken = async () => {
-            try {
-                const userToken: User = await persistence()
-                if (userToken != null) {
-                    dispatch(setCurrentUser(userToken))
-                }
-            } catch (error) {
-                console.error('Error al obtener el usuario:', error)
+    const fetchUserByToken = async () => {
+        try {
+            const userToken: User = await persistence()
+            if (userToken != null) {
+                dispatch(setCurrentUser(userToken))
             }
+        } catch (error) {
+            console.error('Error al obtener el usuario:', error)
         }
+    }
 
+    useEffect(() => {
         void fetchUserByToken()
-    }, [])
+    }, [children])
 
     return (
         <div className="bg-primary min-h-screen min-w-screen flex flex-col">

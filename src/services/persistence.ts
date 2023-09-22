@@ -10,7 +10,6 @@ export const persistence = async () => {
         const response = await axios.post(`${API_URL}/drivers/secret`, {
             tokenData: token,
         })
-
         return response.data.user
     } catch (error) {
         console.error('Persistence service error', error)
