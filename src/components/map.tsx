@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import L from 'leaflet'
 import 'leaflet-routing-machine'
+import '../styles/loader.css'
 
 interface MapComponentProps {
     address: string
@@ -99,7 +100,22 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         packageLat === 0 ||
         packageLng === 0
     ) {
-        return <div>Cargando...</div>
+        return (
+            <div
+                className="w-60 h-60 border border-primary rounded-lg"
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: '270px',
+                    minWidth: '270px',
+                }}
+            >
+                <div className="loader"></div>
+                <div className="mt-8">Cargando...</div>
+            </div>
+        )
     }
 
     return (
