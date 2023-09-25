@@ -1,12 +1,15 @@
 'use client'
-import React from 'react'
+import React, { use, useEffect } from 'react'
 import { BgLayout } from '../../bgLayout'
 import dynamic from 'next/dynamic'
 import LayoutContainer from '../../layoutContainer'
 import { Button } from '../../../src/commons/generic/Button'
 import Link from 'next/link'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { type RootState } from 'store/store'
+import { editPackage } from 'services/editPackage'
+import { deliverPackage } from 'store/slices/currentDeliverySlice'
+import { useRouter } from 'next/navigation'
 
 const MapComponent = dynamic(
     async () =>
@@ -17,10 +20,30 @@ const MapComponent = dynamic(
 )
 
 const CurrentDelivery = () => {
+    const dispatch = useDispatch()
+    const router = useRouter()
     const currentDelivery = useSelector(
         (state: RootState) => state.currentDelivery
     )
     const packageInfo = currentDelivery[0]
+
+    const handlePackageDelivered = async () => {
+        try {
+            await editPackage({ status: 'delivered' }, packageInfo._id)
+            dispatch(deliverPackage(currentDelivery))
+        } catch (error) {
+            console.error('handlePackageDelivered service error')
+        }
+    }
+
+    const handleFinishOrder = async () => {
+        try {
+            await handlePackageDelivered()
+            router.push('/home')
+        } catch (error) {
+            console.error('handleFinishOrder service error')
+        }
+    }
 
     return (
         <BgLayout>
@@ -37,16 +60,22 @@ const CurrentDelivery = () => {
                         </div>
                         <div className="py-2">
                             <strong>Número de paquete: </strong>
-                            {packageInfo?._id}
+                            {packageInfo?._id.slice(0, 5)}
                         </div>
                         <div className="py-2">
                             <strong>Recibe: </strong>
                             {packageInfo?.receiver_name}
                         </div>
                     </div>
-                    <Link href={'/start-shift'}>
-                        <Button type="button">Finalizar</Button>
-                    </Link>
+                    {currentDelivery.length > 1 ? (
+                        <Button type="button" onClick={handlePackageDelivered}>
+                            Entregado!
+                        </Button>
+                    ) : (
+                        <Button type="button" onClick={handleFinishOrder}>
+                            Finalizar!
+                        </Button>
+                    )}
                 </div>
             </LayoutContainer>
             <div className="py-4">
