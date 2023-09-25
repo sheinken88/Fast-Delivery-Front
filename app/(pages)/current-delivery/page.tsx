@@ -27,7 +27,10 @@ const CurrentDelivery = () => {
             <LayoutContainer title="Reparto en curso" backUrl={'/packages'}>
                 <div className="flex flex-col md:flex-row">
                     <div className="text-left text-sm py-2 mx-auto">
-                        <MapComponent />
+                        <MapComponent
+                            address={packageInfo?.address}
+                            city={packageInfo?.city}
+                        />
                         <div className="py-2">
                             <strong>Destino: </strong>
                             {packageInfo?.address}, {packageInfo?.city}

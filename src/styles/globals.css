@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import '~/node_modules/leaflet/dist/leaflet.css';
+@import '~leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
 @font-face {
     font-family: 'Poppins';
@@ -20,4 +21,8 @@ body {
 .grey-button {
     background-color: lightgrey;
     color: grey;
+}
+
+.leaflet-routing-container {
+    display: none !important;
 }
