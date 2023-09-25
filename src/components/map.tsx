@@ -48,6 +48,11 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     }
 
     const loadMap = () => {
+        if (mapRef.current != null) {
+            mapRef.current.remove()
+            mapRef.current = null
+        }
+
         const mapElement = document.getElementById('map')
 
         if (mapElement != null) {
@@ -55,28 +60,27 @@ export const MapComponent: React.FC<MapComponentProps> = ({
                 [userLocation.lat, userLocation.lng],
                 13
             )
-
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
             }).addTo(mapRef.current)
+        }
 
-            if (packageLat !== 0 && packageLng !== 0) {
-                L.Routing.control({
-                    waypoints: [
-                        L.latLng(userLocation.lat, userLocation.lng),
-                        L.latLng(packageLat, packageLng),
-                    ],
-                }).addTo(mapRef.current)
-                L.Routing.plan(
-                    [
-                        L.latLng(userLocation.lat, userLocation.lng),
-                        L.latLng(packageLat, packageLng),
-                    ],
-                    {
-                        draggableWaypoints: false,
-                    }
-                ).addTo(mapRef.current)
-            }
+        if (packageLat !== 0 && packageLng !== 0 && mapRef.current != null) {
+            L.Routing.control({
+                waypoints: [
+                    L.latLng(userLocation.lat, userLocation.lng),
+                    L.latLng(packageLat, packageLng),
+                ],
+            }).addTo(mapRef.current)
+            L.Routing.plan(
+                [
+                    L.latLng(userLocation.lat, userLocation.lng),
+                    L.latLng(packageLat, packageLng),
+                ],
+                {
+                    draggableWaypoints: false,
+                }
+            ).addTo(mapRef.current)
         }
     }
 
@@ -87,7 +91,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
 
     useEffect(() => {
         loadMap()
-    }, [userLocation, packageLat, packageLng])
+    }, [packageLng])
 
     if (
         userLocation.lat === 0 ||
@@ -103,7 +107,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
             <div
                 id="map"
                 className="w-60 h-60 border border-primary rounded-lg"
-                style={{ minHeight: '400px', minWidth: '400px' }}
+                style={{ minHeight: '270px', minWidth: '270px' }}
             ></div>
         </div>
     )

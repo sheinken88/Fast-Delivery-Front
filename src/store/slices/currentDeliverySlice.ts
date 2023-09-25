@@ -10,9 +10,16 @@ const currentDeliverySlice = createSlice({
         setCurrentDelivery: (state, action: PayloadAction<IPackage[]>) => {
             return action.payload
         },
+        deliverPackage: (state, action: PayloadAction<IPackage[]>) => {
+            if (state.length > 0) {
+                return state.slice(1)
+            }
+            return state
+        },
     },
 })
 
-export const { setCurrentDelivery } = currentDeliverySlice.actions
+export const { setCurrentDelivery, deliverPackage } =
+    currentDeliverySlice.actions
 
 export default currentDeliverySlice.reducer
