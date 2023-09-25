@@ -1,5 +1,5 @@
 'use client'
-import React, { use, useEffect } from 'react'
+import React from 'react'
 import { BgLayout } from '../../bgLayout'
 import dynamic from 'next/dynamic'
 import LayoutContainer from '../../layoutContainer'
