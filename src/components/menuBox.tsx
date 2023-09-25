@@ -21,7 +21,7 @@ export const MenuBoxComponent: React.FC<MenuProps> = ({
             className={`flex items-center w-full h-12 p-4 rounded-lg shadow-md ${
                 isEnabled ? 'bg-customGreen' : 'grey-button'
             }`}
-            disabled={!isEnabled}
+            disabled={isEnabled === null ? true : !isEnabled}
         >
             <div className="mr-4">{iconMap[icon]}</div>
             <div className="font-semibold">{title}</div>
