@@ -49,14 +49,14 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     }
 
     const loadMap = () => {
-        if (mapRef.current != null) {
+        if (mapRef.current !== null) {
             mapRef.current.remove()
             mapRef.current = null
         }
 
         const mapElement = document.getElementById('map')
 
-        if (mapElement != null) {
+        if (mapElement !== null) {
             mapRef.current = L.map(mapElement).setView(
                 [userLocation.lat, userLocation.lng],
                 13
@@ -66,7 +66,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
             }).addTo(mapRef.current)
         }
 
-        if (packageLat !== 0 && packageLng !== 0 && mapRef.current != null) {
+        if (packageLat !== 0 && packageLng !== 0 && mapRef.current !== null) {
             L.Routing.control({
                 waypoints: [
                     L.latLng(userLocation.lat, userLocation.lng),
