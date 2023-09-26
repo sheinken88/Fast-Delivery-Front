@@ -34,7 +34,7 @@ const Profile: React.FC = () => {
                 phone_number: phoneNumber.value,
                 profile_pic: profilePic.value,
             }
-            if (user != null) {
+            if (user !== null) {
                 await updateUserProfile(user._id, userData)
                 await Swal.fire({
                     text: 'Profile updated successfully!',
