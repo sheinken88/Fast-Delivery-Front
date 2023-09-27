@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BgLayout } from '../../bgLayout'
 import dynamic from 'next/dynamic'
 import LayoutContainer from '../../layoutContainer'
@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2'
 import { cancelOrder } from 'services/cancelOrder'
 import { completeOrder } from 'services/completeOrder'
+import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
 
 const MapComponent = dynamic(
     async () =>
@@ -70,6 +71,7 @@ const CurrentDelivery = () => {
 
                 if (currentDelivery.packages.length <= 1) {
                     await cancelOrder(currentDelivery._id)
+                    dispatch(setSelectedPackages([]))
                     router.push('/home')
                 }
             }
@@ -82,11 +84,14 @@ const CurrentDelivery = () => {
         try {
             await handlePackageDelivered()
             await completeOrder(currentDelivery._id)
+            dispatch(setSelectedPackages([]))
             router.push('/home')
         } catch (error) {
             console.error('handleFinishOrder service error', error)
         }
     }
+
+    useEffect(() => {}, [])
 
     return (
         <BgLayout>

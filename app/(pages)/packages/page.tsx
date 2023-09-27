@@ -11,6 +11,9 @@ import { fetchPendingPackages } from 'services/fetchPendingPackages'
 import type IPackage from '../../../interfaces/package.interface'
 import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
 import { useRouter } from 'next/navigation'
+import Swal from 'sweetalert2'
+import { addToDelivery } from 'services/addToDelivery'
+import { editPackage } from 'services/editPackage'
 
 export default function Packages() {
     const router = useRouter()
@@ -19,6 +22,9 @@ export default function Packages() {
     const packages = useSelector((state: RootState) => state.packages.packages)
     const selectedPackages = useSelector(
         (state: RootState) => state.selectedPackages.packages
+    )
+    const currentDelivery = useSelector(
+        (state: RootState) => state.currentDelivery
     )
 
     const fetchPackages = async () => {
@@ -41,6 +47,25 @@ export default function Packages() {
     }
     const handleContinue = () => {
         router.push('/statement')
+    }
+
+    const handleAddToDelivery = async () => {
+        try {
+            const result = await Swal.fire({
+                text: '¿Deseas agregarlos al pedido actual?',
+                icon: 'question',
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'No',
+                showCancelButton: true,
+                confirmButtonColor: '#00EA77',
+                cancelButtonColor: '#3D1DF3',
+            })
+            if (result.isConfirmed)
+                await addToDelivery(currentDelivery._id, selectedPackages)
+            router.push('/statement')
+        } catch (error) {
+            console.error('handleAddToDelivery error', error)
+        }
     }
 
     useEffect(() => {
@@ -78,16 +103,29 @@ export default function Packages() {
                         ))}
                     </div>
                 </LayoutContainer>
-                <Button
-                    onClick={handleContinue}
-                    type="button"
-                    customStyle={`mt-4 mx-auto block ${
-                        !canContinue ? 'black-button' : ''
-                    }`}
-                    disabled={!canContinue}
-                >
-                    Iniciar Jornada
-                </Button>
+                {currentDelivery.packages.length <= 0 ? (
+                    <Button
+                        onClick={handleContinue}
+                        type="button"
+                        customStyle={`mt-4 mx-auto block ${
+                            !canContinue ? 'black-button' : ''
+                        }`}
+                        disabled={!canContinue}
+                    >
+                        Iniciar Jornada
+                    </Button>
+                ) : (
+                    <Button
+                        onClick={handleAddToDelivery}
+                        type="button"
+                        customStyle={`mt-4 mx-auto block ${
+                            !canContinue ? 'black-button' : ''
+                        }`}
+                        disabled={!canContinue}
+                    >
+                        Agregar al pedido
+                    </Button>
+                )}
             </div>
         </BgLayout>
     )

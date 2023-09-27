@@ -13,6 +13,7 @@ import {
     setDeliveryId,
 } from 'store/slices/currentDeliverySlice'
 import { createOrder } from 'services/createOrder'
+import { editPackage } from 'services/editPackage'
 
 const Statement: React.FC = () => {
     const router = useRouter()
@@ -45,7 +46,10 @@ const Statement: React.FC = () => {
         if (selectedButtons.every((val) => val)) {
             const order = await createOrder(selectedPackages)
             if (order !== null) router.push('/current-delivery')
-            dispatch(setSelectedPackages([]))
+            for (const p of order.packages) {
+                await editPackage({ status: 'in progress' }, p._id)
+            }
+            // dispatch(setSelectedPackages([]))
             dispatch(setCurrentDelivery(order.packages))
             dispatch(setDeliveryId(order._id))
         }

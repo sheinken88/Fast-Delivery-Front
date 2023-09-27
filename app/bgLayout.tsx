@@ -13,7 +13,10 @@ import { persistence } from 'services/persistence'
 import { useDispatch, useSelector } from 'react-redux'
 import { type User, setCurrentUser } from 'store/slices/usersSlice'
 import { fetchCurrentDelivery } from 'services/fetchCurrentDelivery'
-import { setCurrentDelivery } from 'store/slices/currentDeliverySlice'
+import {
+    setCurrentDelivery,
+    setDeliveryId,
+} from 'store/slices/currentDeliverySlice'
 import { type RootState } from 'store/store'
 
 interface BgLayoutProps {
@@ -24,9 +27,9 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const user = useSelector((state: RootState) => state.users.currentUser)
-    // const currentDelivery = useSelector(
-    //     (state: RootState) => state.currentDelivery
-    // )
+    const currentDelivery = useSelector(
+        (state: RootState) => state.currentDelivery
+    )
 
     const handleLogout = async () => {
         const result = await Swal.fire({
@@ -62,6 +65,7 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
                 const deliveryPackages = await fetchCurrentDelivery(user._id)
                 if (deliveryPackages !== null)
                     dispatch(setCurrentDelivery(deliveryPackages.packages))
+                dispatch(setDeliveryId(deliveryPackages._id))
             }
         } catch (error) {
             console.error('Error al obtener el delivery actual', error)
@@ -69,11 +73,13 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
     }
 
     useEffect(() => {
-        void fetchUserByToken()
+        const token = localStorage.getItem('user')
+        if (token !== null) void fetchUserByToken()
     }, [])
 
     useEffect(() => {
-        if (user != null) void fetchDeliveryPackages()
+        if (user !== null) void fetchDeliveryPackages()
+        console.log('currentDelivery', currentDelivery.packages)
     }, [])
 
     return (
@@ -85,8 +91,6 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
                             src={Logo}
                             alt="Fast Delivery Logo"
                             className=""
-                            width={50}
-                            height={24}
                             priority
                         />
                     </Link>
