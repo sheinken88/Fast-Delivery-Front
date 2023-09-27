@@ -1,12 +1,11 @@
-import { API_URL } from 'utils/config'
-import axios from 'axios'
 import type IPackage from '../../interfaces/package.interface'
+import axiosInstance from '../../interfaces/axiosInstance'
 
 export const createOrder = async (packages: IPackage[]) => {
     try {
         const driver = localStorage.getItem('user')
         const idPackages = getPackagesId(packages)
-        const createdOrder = await axios.post(`${API_URL}/orders/`, {
+        const createdOrder = await axiosInstance.post('/orders/', {
             driverToken: driver,
             idPackages,
         })
