@@ -8,7 +8,10 @@ import { Question } from 'components/question'
 import { useDispatch, useSelector } from 'react-redux'
 import { type RootState } from 'store/store'
 import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
-import { setCurrentDelivery } from 'store/slices/currentDeliverySlice'
+import {
+    setCurrentDelivery,
+    setDeliveryId,
+} from 'store/slices/currentDeliverySlice'
 import { createOrder } from 'services/createOrder'
 
 const Statement: React.FC = () => {
@@ -38,21 +41,13 @@ const Statement: React.FC = () => {
         })
     }
 
-    const orderCreation = async () => {
-        try {
-            const createdOrder = await createOrder(selectedPackages)
-            dispatch(setCurrentDelivery(createdOrder.packages))
-        } catch (error) {
-            console.error('createOrder component error', error)
-        }
-    }
-
     const handleContinue = async (): Promise<void> => {
         if (selectedButtons.every((val) => val)) {
             const order = await createOrder(selectedPackages)
             if (order !== null) router.push('/current-delivery')
             dispatch(setSelectedPackages([]))
-            await orderCreation()
+            dispatch(setCurrentDelivery(order.packages))
+            dispatch(setDeliveryId(order._id))
         }
     }
 

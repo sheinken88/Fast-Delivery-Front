@@ -6,11 +6,11 @@ import { IconContext } from 'react-icons'
 import PackageCard from 'commons/PackageCard'
 import type PendingProps from '../../interfaces/props/pendingProps.interface'
 
-export const Pending: FC<PendingProps> = ({ packages }) => {
+export const CurrentPackages: FC<PendingProps> = ({ packages }) => {
     const [isVisible, setIsVisible] = useState(true)
 
     const toggleVisibility = () => {
-        setIsVisible(!isVisible)
+        if (packages[0] !== null) setIsVisible(!isVisible)
     }
 
     return (
@@ -19,7 +19,7 @@ export const Pending: FC<PendingProps> = ({ packages }) => {
                 className="flex justify-between items-center font-bold text-primary mb-4 cursor-pointer"
                 onClick={toggleVisibility}
             >
-                <h2 className="text-lg">Repartos pendientes</h2>
+                <h2 className="text-lg">Entrega en curso</h2>
                 {packages[0] !== null && (
                     <IconContext.Provider
                         value={{
@@ -36,15 +36,11 @@ export const Pending: FC<PendingProps> = ({ packages }) => {
                     {packages[0] !== null ? (
                         <div className="flex flex-col gap-4">
                             {packages.map((pkg) => (
-                                <PackageCard
-                                    key={pkg._id}
-                                    packageData={pkg}
-                                    showDeleteIcon={false}
-                                />
+                                <PackageCard key={pkg._id} packageData={pkg} />
                             ))}
                         </div>
                     ) : (
-                        <p>No tienes repartos pendientes</p>
+                        <p>No tienes un reparto actual</p>
                     )}
                 </div>
             )}
