@@ -10,8 +10,11 @@ import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { persistence } from 'services/persistence'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { type User, setCurrentUser } from 'store/slices/usersSlice'
+import { fetchCurrentDelivery } from 'services/fetchCurrentDelivery'
+import { setCurrentDelivery } from 'store/slices/currentDeliverySlice'
+import { type RootState } from 'store/store'
 
 interface BgLayoutProps {
     children: ReactNode
@@ -20,6 +23,10 @@ interface BgLayoutProps {
 export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
     const router = useRouter()
     const dispatch = useDispatch()
+    const user = useSelector((state: RootState) => state.users.currentUser)
+    // const currentDelivery = useSelector(
+    //     (state: RootState) => state.currentDelivery
+    // )
 
     const handleLogout = async () => {
         const result = await Swal.fire({
@@ -49,8 +56,24 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
         }
     }
 
+    const fetchDeliveryPackages = async () => {
+        try {
+            if (user != null) {
+                const deliveryPackages = await fetchCurrentDelivery(user._id)
+                if (deliveryPackages !== null)
+                    dispatch(setCurrentDelivery(deliveryPackages.packages))
+            }
+        } catch (error) {
+            console.error('Error al obtener el delivery actual', error)
+        }
+    }
+
     useEffect(() => {
         void fetchUserByToken()
+    }, [])
+
+    useEffect(() => {
+        if (user != null) void fetchDeliveryPackages()
     }, [])
 
     return (

@@ -3,6 +3,12 @@ import type { FC } from 'react'
 import { IconContext } from 'react-icons'
 import { PiPackageLight } from 'react-icons/pi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
+import { useDispatch, useSelector } from 'react-redux'
+import { cancelOrder } from 'services/cancelOrder'
+import { editPackage } from 'services/editPackage'
+import { removePackage } from 'store/slices/currentDeliverySlice'
+import { type RootState } from 'store/store'
+import Swal from 'sweetalert2'
 
 interface Package {
     _id: string
@@ -20,6 +26,36 @@ const PackageCard: FC<PackageCardProps> = ({
     packageData,
     showDeleteIcon = true,
 }) => {
+    const dispatch = useDispatch()
+    const currentDelivery = useSelector(
+        (state: RootState) => state.currentDelivery
+    )
+
+    const handleDeletePackage = async () => {
+        try {
+            const result = await Swal.fire({
+                text: '¿Deseas eliminar el paquete del envío?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'No',
+                confirmButtonColor: '#00EA77',
+                cancelButtonColor: '#3D1DF3',
+            })
+            if (result.isConfirmed) {
+                await editPackage({ status: 'pending' }, packageData._id)
+                dispatch(removePackage(packageData._id))
+                if (currentDelivery.packages.length === 0) {
+                    const cancelledOrder = await cancelOrder(
+                        currentDelivery._id
+                    )
+                    console.log('cancelledOrder', cancelledOrder)
+                }
+            }
+        } catch (error) {
+            console.error('handleDeletePackage error', error)
+        }
+    }
     return (
         <div
             key={packageData._id}
@@ -68,7 +104,7 @@ const PackageCard: FC<PackageCardProps> = ({
                                 size: '16px',
                             }}
                         >
-                            <RiDeleteBin6Line />
+                            <RiDeleteBin6Line onClick={handleDeletePackage} />
                         </IconContext.Provider>
                     )}
                 </div>

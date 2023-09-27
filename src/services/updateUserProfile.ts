@@ -19,7 +19,7 @@ export const updateUserProfile = async (
         )
         return response.data
     } catch (error) {
-        console.log('updateUserProfile service error', error)
+        console.error('updateUserProfile service error', error)
         throw error
     }
 }
