@@ -48,7 +48,7 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
     const fetchUserByToken = async () => {
         try {
             const userToken: User = await persistence()
-            if (userToken != null) {
+            if (userToken !== null) {
                 dispatch(setCurrentUser(userToken))
             }
         } catch (error) {
