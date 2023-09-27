@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { API_URL } from 'utils/config'
+import axiosInstance from '../../interfaces/axiosInstance'
 import type { FormValues } from '../../app/(pages)/profile/page'
 
 export const updateUserProfile = async (
@@ -7,14 +6,11 @@ export const updateUserProfile = async (
     userData: FormValues
 ) => {
     try {
-        const response = await axios.put(
-            `${API_URL}/drivers/${userId}`,
+        const response = await axiosInstance.put(
+            `/drivers/${userId}`,
             userData,
             {
                 withCredentials: true,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
             }
         )
         return response.data

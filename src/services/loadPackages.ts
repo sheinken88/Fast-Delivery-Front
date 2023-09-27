@@ -1,10 +1,8 @@
-// import { packages } from '../../fake-data/packages'
-import axios from 'axios'
-import { API_URL } from 'utils/config'
+import axiosInstance from '../../interfaces/axiosInstance'
 
 export const loadPackages = async () => {
     try {
-        const packages = await axios.get(`${API_URL}/packages`)
+        const packages = await axiosInstance.get('/packages')
         return packages.data
     } catch (error) {
         console.error('loadPackages service error')

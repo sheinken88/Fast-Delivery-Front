@@ -1,10 +1,9 @@
-import { API_URL } from 'utils/config'
-import axios from 'axios'
+import axiosInstance from '../../interfaces/axiosInstance'
 
 export const completeOrder = async (orderId: string) => {
     try {
-        const completedOrder = await axios.put(
-            `${API_URL}/orders/complete/${orderId}`
+        const completedOrder = await axiosInstance.put(
+            `/orders/complete/${orderId}`
         )
         return completedOrder.data
     } catch (error) {
