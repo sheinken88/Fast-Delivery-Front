@@ -10,7 +10,6 @@ import type IPackage from '../../../interfaces/package.interface'
 import { CurrentPackages } from 'components/currentPackages'
 
 const Home: React.FC = () => {
-    const profileImg: string | null = null
     const [isEnabled, setIsEnabled] = useState(false)
     const [pendingPackages, setPendingPackages] = useState<IPackage[]>([])
     const currentDelivery = useSelector(
@@ -33,7 +32,7 @@ const Home: React.FC = () => {
                         height={56}
                         width={56}
                         alt="Profile Picture"
-                        src={profileImg ?? '/empty_profile_pic.jpg'}
+                        src={user?.profile_pic ?? '/empty_profile_pic.jpg'}
                     />
                     <div className="flex flex-col ml-4 mt-1">
                         <p className="font-semibold">

@@ -13,7 +13,7 @@ import {
 } from 'react-icons/ai'
 import { HiOutlineLockClosed } from 'react-icons/hi'
 import { useDispatch } from 'react-redux'
-import { setCurrentUser } from '../../../src/store/slices/usersSlice'
+import { setCurrentUser } from '../../../src/store/slices/userSlice'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2'
 
