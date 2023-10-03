@@ -1,10 +1,6 @@
 import axiosInstance from '../../interfaces/axiosInstance'
-import type { FormValues } from '../../app/(pages)/profile/page'
 
-export const updateUserProfile = async (
-    userId: string,
-    userData: FormValues
-) => {
+export const updateUserProfile = async (userId: string, userData: object) => {
     try {
         const response = await axiosInstance.put(
             `/drivers/${userId}`,

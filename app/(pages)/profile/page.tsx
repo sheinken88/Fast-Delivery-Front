@@ -1,123 +1,135 @@
 'use client'
-import React from 'react'
-import { BgLayout } from '../../bgLayout'
-import LayoutContainer from '../../../app/layoutContainer'
-import Image from 'next/image'
+import React, { useState } from 'react'
+import Swal from 'sweetalert2'
 import { useSelector } from 'react-redux'
 import type { RootState } from 'store/store'
-import { FaEdit } from 'react-icons/fa'
+import { BgLayout } from '../../bgLayout'
+import LayoutContainer from '../../../app/layoutContainer'
 import { Button } from 'commons/generic/Button'
-import { updateUserProfile } from 'services/updateUserProfile'
 import useInput from 'hooks/useInput'
-import Swal from 'sweetalert2'
+import { updateUserProfile } from '../../../src/services/updateUserProfile'
+import EditableInput from 'commons/generic/EditableInput'
+import ImageUploader from 'components/ImageUploader'
 
 export interface FormValues {
     username: string | undefined
     email: string | undefined
-    phone_number: string | undefined
     profile_pic: string | undefined
 }
 
 const Profile: React.FC = () => {
     const user = useSelector((state: RootState) => state.users.currentUser)
-    const username = useInput(user != null ? user.username : '')
+    const username = useInput(
+        typeof user?.username === 'string' ? user.username : ''
+    )
     const email = useInput(user != null ? user.email : '')
-    const phoneNumber = useInput(user != null ? user.phone_number : '')
-    const profilePic = useInput(user != null ? user.profile_pic : '')
+    const [isEditing, setIsEditing] = useState(false)
+    const [selectedImage, setSelectedImage] = useState(user?.profile_pic)
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        try {
-            const userData: FormValues = {
-                username: username.value,
-                email: email.value,
-                phone_number: phoneNumber.value,
-                profile_pic: profilePic.value,
-            }
-            if (user !== null) {
-                await updateUserProfile(user._id, userData)
-                await Swal.fire({
-                    text: 'Profile updated successfully!',
-                    icon: 'success',
-                    confirmButtonText: 'Ok',
+    const changeEditing = () => {
+        setIsEditing(!isEditing)
+    }
+
+    const handleSubmit = async () => {
+        if (user && selectedImage) {
+            const data = new FormData()
+            data.append('file', selectedImage)
+            data.append('upload_preset', 'hy4lupmz')
+            data.append('cloud_name', 'db3pcwsrm')
+            const folder = 'fast-delivery/profile_pictures/admins'
+            void fetch(
+                `https://api.cloudinary.com/v1_1/db3pcwsrm/image/upload?folder=${folder}`,
+                {
+                    method: 'post',
+                    body: data,
+                }
+            )
+                .then(async (res) => {
+                    if (res.ok) return await res.json()
                 })
-            }
-        } catch (error) {
-            console.error('Error updating profile', error)
-            await Swal.fire({
-                text: 'Failed to update profile. Please try again later.',
-                icon: 'error',
-                confirmButtonText: 'Ok',
-            })
+                .then(
+                    async (data) =>
+                        await updateUserProfile(user?._id, {
+                            profile_pic: data.url,
+                        })
+                )
+                .then(async () => {
+                    changeEditing()
+                    await Swal.fire({
+                        icon: 'success',
+                        text: 'Subida correctamente',
+                        confirmButtonText: 'Genial!',
+                    })
+                })
         }
     }
 
     return (
         <BgLayout>
             <LayoutContainer title={'Profile'} backUrl={'/home'}>
-                <form onSubmit={handleSubmit}>
-                    <p className="font-semibold mt-10 px-4 mb-4">
-                        EDITAR PERFIL
-                    </p>
-                    <div className="bg-gray-100 w-full h-[150px] flex items-center justify-center relative">
-                        <div className="absolute top-4 right-4">
-                            <FaEdit className="text-xl text-primary cursor-pointer" />
+                <div>
+                    {!isEditing ? (
+                        <div
+                            className="flex justify-center items-center w-full"
+                            style={{
+                                backgroundColor: 'lightgrey',
+                                height: 120,
+                            }}
+                        >
+                            <img
+                                src={selectedImage}
+                                alt="Selected Image"
+                                className="h-20 w-20 border rounded-full"
+                            />
                         </div>
-                        <Image
-                            className="rounded-full"
-                            height={64}
-                            width={64}
-                            alt="Profile Picture"
-                            src={
-                                profilePic.value !== ''
-                                    ? profilePic.value
-                                    : '/generic-user.png'
-                            }
+                    ) : (
+                        <ImageUploader
+                            selectedImage={selectedImage ?? ''}
+                            setSelectedImage={setSelectedImage}
                         />
-                    </div>
-                    <div className="mt-4 border-b border-b-gray-200 pb-4 px-4">
-                        <p className="font-bold">USERNAME</p>
-                        <div className="flex justify-between">
-                            <input
-                                type="text"
-                                name="username"
-                                value={username.value}
-                                onChange={username.onChange}
-                                className="border rounded w-full py-2 px-3"
-                            />
-                            <FaEdit className="text-xl text-primary cursor-pointer" />
+                    )}
+                    <EditableInput
+                        name="username"
+                        value={username.value}
+                        isEditing={isEditing}
+                        onChange={username.onChange}
+                    />
+                    <EditableInput
+                        name="email"
+                        value={email.value}
+                        isEditing={isEditing}
+                        onChange={email.onChange}
+                    />
+                    {isEditing ? (
+                        <div>
+                            <Button
+                                type="submit"
+                                customStyle="mt-8 mb-4 mx-auto font-semibold block"
+                                onClick={
+                                    handleSubmit as () => void | Promise<void>
+                                }
+                            >
+                                Guardar
+                            </Button>
+
+                            <Button
+                                type="button"
+                                customStyle="mt-8 mb-4 mx-auto block font-bold red-button"
+                                onClick={changeEditing}
+                            >
+                                Cancelar
+                            </Button>
                         </div>
-                    </div>
-                    <div className="mt-4 border-b border-b-gray-200 pb-4 px-4">
-                        <p className="font-bold">EMAIL</p>
-                        <div className="flex justify-between">
-                            <input
-                                type="email"
-                                name="email"
-                                value={email.value}
-                                onChange={email.onChange}
-                                className="border rounded w-full py-2 px-3"
-                            />
-                            <FaEdit className="text-xl text-primary cursor-pointer" />
-                        </div>
-                    </div>
-                    <div className="mt-4 border-b border-b-gray-200 pb-4 px-4">
-                        <p className="font-bold">PHONE</p>
-                        <div className="flex justify-between">
-                            <input
-                                type="text"
-                                name="phone_number"
-                                value={phoneNumber.value}
-                                onChange={phoneNumber.onChange}
-                                className="border rounded w-full py-2 px-3"
-                            />
-                            <FaEdit className="text-xl text-primary cursor-pointer" />
-                        </div>
-                    </div>
-                    <Button type="submit" customStyle="mt-8 mb-4 mx-auto block">
-                        Guardar
-                    </Button>
-                </form>
+                    ) : (
+                        <Button
+                            type="button"
+                            customStyle="mt-8 mb-4 mx-auto font-semibold block"
+                            onClick={changeEditing}
+                        >
+                            Editar
+                        </Button>
+                    )}
+                </div>
             </LayoutContainer>
         </BgLayout>
     )

@@ -7,9 +7,7 @@
     "extends": [
         "standard-with-typescript",
         "plugin:react/recommended",
-        "plugin:prettier/recommended",
-        "plugin:testing-library/react",
-        "plugin:jest-dom/recommended"
+        "plugin:prettier/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -25,11 +23,26 @@
     },
     "rules": {
         "quotes": ["warn", "single"],
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": "variable",
+                "format": [
+                    "camelCase",
+                    "PascalCase",
+                    "UPPER_CASE",
+                    "snake_case"
+                ],
+                "leadingUnderscore": "allow",
+                "trailingUnderscore": "allow"
+            }
+        ],
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-unused-vars": "warn",
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
         "prettier/prettier": ["warn"],
-        "@typescript-eslint/no-misused-promises": "off"
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/strict-boolean-expressions": "off"
     }
 }

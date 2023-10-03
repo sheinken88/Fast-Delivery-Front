@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import packagesReducer from '../store/slices/packagesSlice'
 import deliveryPackagesReducer from '../store/slices/deliveryPackagesSlice'
-import usersReducer from '../store/slices/usersSlice'
+import usersReducer from './slices/userSlice'
 import selectedPackagesReducer from '../store/slices/selectedPackageSlice'
 import currentDeliveryReducer from './slices/currentDeliverySlice'
 

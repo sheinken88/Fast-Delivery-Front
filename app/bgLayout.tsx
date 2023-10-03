@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { persistence } from 'services/persistence'
 import { useDispatch, useSelector } from 'react-redux'
-import { type User, setCurrentUser } from 'store/slices/usersSlice'
+import { type User, setCurrentUser } from 'store/slices/userSlice'
 import { fetchCurrentDelivery } from 'services/fetchCurrentDelivery'
 import {
     setCurrentDelivery,
