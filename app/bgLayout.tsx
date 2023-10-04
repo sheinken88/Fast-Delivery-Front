@@ -59,11 +59,12 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
 
     const fetchDeliveryPackages = async () => {
         try {
-            if (user != null) {
+            if (user !== null) {
                 const deliveryPackages = await fetchCurrentDelivery(user._id)
-                if (deliveryPackages !== null)
+                if (deliveryPackages !== null) {
                     dispatch(setCurrentDelivery(deliveryPackages.packages))
-                dispatch(setDeliveryId(deliveryPackages._id))
+                    dispatch(setDeliveryId(deliveryPackages._id))
+                }
             }
         } catch (error) {
             console.error('Error al obtener el delivery actual', error)
@@ -72,7 +73,7 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
 
     useEffect(() => {
         const token = localStorage.getItem('user')
-        if (token !== null) void fetchUserByToken()
+        if (token !== null && user === null) void fetchUserByToken()
     }, [])
 
     useEffect(() => {
