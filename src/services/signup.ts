@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { API_URL } from 'utils/config'
+import axiosInstance from '../../interfaces/axiosInstance'
 
 export const signup = async (data: object) => {
     try {
-        const newDriver = await axios.post(`${API_URL}/drivers/signup`, data)
+        const newDriver = await axiosInstance.post('/drivers/signup', data)
         return newDriver.data
     } catch (error) {
         console.error('signup service error', error)
