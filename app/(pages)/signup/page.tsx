@@ -70,6 +70,7 @@ const Signup = () => {
                 const user = await login(email.value, password.value)
                 if (user !== null && user !== undefined) {
                     dispatch(setCurrentUser(user))
+                    router.push('/home')
                 }
             } else {
                 await Swal.fire({
@@ -77,7 +78,6 @@ const Signup = () => {
                     icon: 'error',
                 })
             }
-            router.push('/start-shift')
         } catch (error) {
             console.error(error)
         }

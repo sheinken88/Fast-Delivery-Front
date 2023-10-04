@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { persistence } from 'services/persistence'
 import { useDispatch, useSelector } from 'react-redux'
-import { type User, setCurrentUser } from 'store/slices/userSlice'
+import { type User, setCurrentUser, logoutUser } from 'store/slices/userSlice'
 import { fetchCurrentDelivery } from 'services/fetchCurrentDelivery'
 import {
     setCurrentDelivery,
@@ -27,9 +27,6 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const user = useSelector((state: RootState) => state.users.currentUser)
-    const currentDelivery = useSelector(
-        (state: RootState) => state.currentDelivery
-    )
 
     const handleLogout = async () => {
         const result = await Swal.fire({
@@ -44,6 +41,7 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
 
         if (result.isConfirmed) {
             localStorage.removeItem('user')
+            dispatch(logoutUser())
             router.push('/login')
         }
     }
@@ -79,7 +77,6 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
 
     useEffect(() => {
         if (user !== null) void fetchDeliveryPackages()
-        console.log('currentDelivery', currentDelivery.packages)
     }, [])
 
     return (
