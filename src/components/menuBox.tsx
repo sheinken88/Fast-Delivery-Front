@@ -2,24 +2,30 @@
 import React from 'react'
 import { FaUserAlt, FaTasks, FaMapMarked } from 'react-icons/fa'
 import { PiPackageLight } from 'react-icons/pi'
+import type MenuProps from '../../interfaces/props/menuProps.interface'
 
 const iconMap = {
-    FaUserAlt: <FaUserAlt />,
-    FaTasks: <FaTasks />,
-    PiPackageLight: <PiPackageLight />,
-    FaMapMarked: <FaMapMarked />,
+    FaUserAlt: <FaUserAlt size={24} />,
+    FaTasks: <FaTasks size={24} />,
+    PiPackageLight: <PiPackageLight size={30} />,
+    FaMapMarked: <FaMapMarked size={24} />,
 }
 
-interface Props {
-    title: string
-    icon: 'FaUserAlt' | 'FaTasks' | 'PiPackageLight' | 'FaMapMarked'
-}
-
-export const MenuBoxComponent: React.FC<Props> = ({ icon, title }) => {
+export const MenuBoxComponent: React.FC<MenuProps> = ({
+    icon,
+    title,
+    isEnabled,
+}) => {
     return (
-        <div className="flex items-center p-4 bg-customGreen rounded-lg shadow-md">
-            <div className="mr-4">{iconMap[icon]}</div>
-            <div className="font-semibold">{title}</div>
-        </div>
+        <button
+            className={`flex flex-col items-center w-full h-12 p-4 rounded-lg shadow-md ${
+                isEnabled ? 'bg-customGreen' : 'grey-button'
+            }`}
+            style={{ height: '100px', width: '100px' }}
+            disabled={isEnabled === null ? true : !isEnabled}
+        >
+            <div className="mt-2">{iconMap[icon]}</div>
+            <div className="font-semibold mt-2">{title}</div>
+        </button>
     )
 }

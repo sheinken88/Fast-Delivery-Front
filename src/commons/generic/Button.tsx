@@ -17,7 +17,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
     return (
         <button
-            className={`relative bg-secondary text-primary py-2 w-full rounded-3xl ${
+            className={`relative py-2 w-full rounded-3xl bg-secondary text-primary ${
                 customStyle ?? ''
             }`}
             type={type === 'button' ? 'button' : 'submit'}

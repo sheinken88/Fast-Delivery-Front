@@ -8,6 +8,16 @@ import { IconContext } from 'react-icons'
 import Link from 'next/link'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { persistence } from 'services/persistence'
+import { useDispatch, useSelector } from 'react-redux'
+import { type User, setCurrentUser, logoutUser } from 'store/slices/userSlice'
+import { fetchCurrentDelivery } from 'services/fetchCurrentDelivery'
+import {
+    setCurrentDelivery,
+    setDeliveryId,
+} from 'store/slices/currentDeliverySlice'
+import { type RootState } from 'store/store'
 
 interface BgLayoutProps {
     children: ReactNode
@@ -15,6 +25,8 @@ interface BgLayoutProps {
 
 export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
     const router = useRouter()
+    const dispatch = useDispatch()
+    const user = useSelector((state: RootState) => state.users.currentUser)
 
     const handleLogout = async () => {
         const result = await Swal.fire({
@@ -29,9 +41,43 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
 
         if (result.isConfirmed) {
             localStorage.removeItem('user')
+            dispatch(logoutUser())
             router.push('/login')
         }
     }
+
+    const fetchUserByToken = async () => {
+        try {
+            const userToken: User = await persistence()
+            if (userToken !== null) {
+                dispatch(setCurrentUser(userToken))
+            }
+        } catch (error) {
+            console.error('Error al obtener el usuario:', error)
+        }
+    }
+
+    const fetchDeliveryPackages = async () => {
+        try {
+            if (user != null) {
+                const deliveryPackages = await fetchCurrentDelivery(user._id)
+                if (deliveryPackages !== null)
+                    dispatch(setCurrentDelivery(deliveryPackages.packages))
+                dispatch(setDeliveryId(deliveryPackages._id))
+            }
+        } catch (error) {
+            console.error('Error al obtener el delivery actual', error)
+        }
+    }
+
+    useEffect(() => {
+        const token = localStorage.getItem('user')
+        if (token !== null) void fetchUserByToken()
+    }, [])
+
+    useEffect(() => {
+        if (user !== null) void fetchDeliveryPackages()
+    }, [])
 
     return (
         <div className="bg-primary min-h-screen min-w-screen flex flex-col">
@@ -42,8 +88,6 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
                             src={Logo}
                             alt="Fast Delivery Logo"
                             className=""
-                            width={50}
-                            height={24}
                             priority
                         />
                     </Link>

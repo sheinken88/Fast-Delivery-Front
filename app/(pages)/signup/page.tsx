@@ -19,7 +19,7 @@ import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { login } from 'services/login'
-import { setCurrentUser } from 'store/slices/usersSlice'
+import { setCurrentUser } from 'store/slices/userSlice'
 
 const Signup = () => {
     const router = useRouter()
@@ -70,6 +70,7 @@ const Signup = () => {
                 const user = await login(email.value, password.value)
                 if (user !== null && user !== undefined) {
                     dispatch(setCurrentUser(user))
+                    router.push('/home')
                 }
             } else {
                 await Swal.fire({
@@ -77,7 +78,6 @@ const Signup = () => {
                     icon: 'error',
                 })
             }
-            router.push('/start-shift')
         } catch (error) {
             console.error(error)
         }
@@ -154,14 +154,12 @@ const Signup = () => {
                             togglePasswordVisibility={togglePasswordVisibility1}
                         />
                     </div>
-                    {/* <Link href={'/start-shift'}> */}
                     <div className="mt-20 flex justify-center flex-col items-center">
                         <Button type="submit">Crear</Button>
                         <p className="text-primary mt-2 mb-2">
                             ¿Ya tenés una cuenta?
                         </p>
                     </div>
-                    {/* </Link> */}
                     <Link href="/login">
                         <div className="mb-4">
                             <Button

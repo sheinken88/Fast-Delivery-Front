@@ -1,13 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "~/node_modules/leaflet/dist/leaflet.css";
+@import '~/node_modules/leaflet/dist/leaflet.css';
+@import '~leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
 @font-face {
-  font-family: "Poppins";
-  src: url("../../public/Poppins-Regular.ttf");
+    font-family: 'Poppins';
+    src: url('../../public/Poppins-Regular.ttf');
 }
 
 body {
-  font-family: "Poppins";
+    font-family: 'Poppins';
+}
+
+.black-button {
+    background-color: grey;
+    color: black;
+}
+
+.grey-button {
+    background-color: lightgrey;
+    color: grey;
+}
+
+.leaflet-routing-container {
+    display: none !important;
 }

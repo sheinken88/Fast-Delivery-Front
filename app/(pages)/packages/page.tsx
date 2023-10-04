@@ -4,31 +4,35 @@ import React, { useEffect, useState } from 'react'
 import LayoutContainer from '../../../app/layoutContainer'
 import { BgLayout } from '../../../app/bgLayout'
 import { Button } from '../../../src/commons/generic/Button'
-import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from 'store/store'
 import { setPackages } from 'store/slices/packagesSlice'
-import { loadPackages } from 'services/packagesService'
-
-interface PackageInfo {
-    address: string
-    city: string
-}
+import { fetchPendingPackages } from 'services/fetchPendingPackages'
+import type IPackage from '../../../interfaces/package.interface'
+import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
+import { useRouter } from 'next/navigation'
+import Swal from 'sweetalert2'
+import { addToDelivery } from 'services/addToDelivery'
+import { editPackage } from 'services/editPackage'
 
 export default function Packages() {
-    const [selectedPackages, setSelectedPackages] = useState<PackageInfo[]>([])
-
+    const router = useRouter()
     const dispatch = useDispatch()
+    const [canContinue, setCanContinue] = useState(false)
     const packages = useSelector((state: RootState) => state.packages.packages)
+    const selectedPackages = useSelector(
+        (state: RootState) => state.selectedPackages.packages
+    )
+    const currentDelivery = useSelector(
+        (state: RootState) => state.currentDelivery
+    )
 
-    useEffect(() => {
-        dispatch(setPackages(loadPackages()))
-    }, [dispatch])
+    const fetchPackages = async () => {
+        const packages = await fetchPendingPackages()
+        dispatch(setPackages(packages))
+    }
 
-    const handleSelect = (
-        packageInfo: PackageInfo,
-        isSelected: boolean
-    ): void => {
+    const handleSelect = (packageInfo: IPackage, isSelected: boolean): void => {
         let updatedSelectedPackages = [...selectedPackages]
 
         if (isSelected) {
@@ -39,8 +43,39 @@ export default function Packages() {
             )
         }
 
-        setSelectedPackages(updatedSelectedPackages)
+        dispatch(setSelectedPackages(updatedSelectedPackages))
     }
+    const handleContinue = () => {
+        router.push('/statement')
+    }
+
+    const handleAddToDelivery = async () => {
+        try {
+            const result = await Swal.fire({
+                text: '¿Deseas agregarlos al pedido actual?',
+                icon: 'question',
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'No',
+                showCancelButton: true,
+                confirmButtonColor: '#00EA77',
+                cancelButtonColor: '#3D1DF3',
+            })
+            if (result.isConfirmed)
+                await addToDelivery(currentDelivery._id, selectedPackages)
+            router.push('/statement')
+        } catch (error) {
+            console.error('handleAddToDelivery error', error)
+        }
+    }
+
+    useEffect(() => {
+        void fetchPackages()
+    }, [dispatch])
+
+    useEffect(() => {
+        if (selectedPackages.length > 0) setCanContinue(true)
+        else setCanContinue(false)
+    }, [handleSelect])
 
     return (
         <BgLayout>
@@ -68,11 +103,29 @@ export default function Packages() {
                         ))}
                     </div>
                 </LayoutContainer>
-                <Link href={'/statement'}>
-                    <Button type="button" customStyle="mt-4 mx-auto block">
+                {currentDelivery.packages.length <= 0 ? (
+                    <Button
+                        onClick={handleContinue}
+                        type="button"
+                        customStyle={`mt-4 mx-auto block ${
+                            !canContinue ? 'black-button' : ''
+                        }`}
+                        disabled={!canContinue}
+                    >
                         Iniciar Jornada
                     </Button>
-                </Link>
+                ) : (
+                    <Button
+                        onClick={handleAddToDelivery}
+                        type="button"
+                        customStyle={`mt-4 mx-auto block ${
+                            !canContinue ? 'black-button' : ''
+                        }`}
+                        disabled={!canContinue}
+                    >
+                        Agregar al pedido
+                    </Button>
+                )}
             </div>
         </BgLayout>
     )

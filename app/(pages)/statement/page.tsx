@@ -4,67 +4,74 @@ import { BgLayout } from '../../bgLayout'
 import LayoutContainer from '../../../app/layoutContainer'
 import { Button } from 'commons/generic/Button'
 import { useRouter } from 'next/navigation'
+import { Question } from 'components/question'
+import { useDispatch, useSelector } from 'react-redux'
+import { type RootState } from 'store/store'
+import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
+import {
+    setCurrentDelivery,
+    setDeliveryId,
+} from 'store/slices/currentDeliverySlice'
+import { createOrder } from 'services/createOrder'
+import { editPackage } from 'services/editPackage'
 
 const Statement: React.FC = () => {
+    const router = useRouter()
+    const dispatch = useDispatch()
+    const selectedPackages = useSelector(
+        (state: RootState) => state.selectedPackages.packages
+    )
+
     const [selectedButtons, setSelectedButtons] = useState<boolean[]>([
         false,
         false,
         false,
     ])
-    const router = useRouter()
 
-    const handleClick = (index: number): void => {
-        const newSelectedButtons = [...selectedButtons]
-        newSelectedButtons[index] = true
-        setSelectedButtons(newSelectedButtons)
+    const [canContinue, setCanContinue] = useState(false)
+
+    const handleClick = (index: number, isNo: boolean): void => {
+        setSelectedButtons((prevSelectedButtons) => {
+            const newSelectedButtons = [...prevSelectedButtons]
+            if (isNo) newSelectedButtons[index] = true
+            if (!isNo) newSelectedButtons[index] = false
+            if (!newSelectedButtons.includes(false)) setCanContinue(true)
+            if (newSelectedButtons.includes(false)) setCanContinue(false)
+
+            return newSelectedButtons
+        })
     }
 
     const handleContinue = async (): Promise<void> => {
         if (selectedButtons.every((val) => val)) {
-            router.push('/current-delivery')
+            const order = await createOrder(selectedPackages)
+            if (order !== null) router.push('/current-delivery')
+            for (const p of order.packages) {
+                await editPackage({ status: 'in progress' }, p._id)
+            }
+            // dispatch(setSelectedPackages([]))
+            dispatch(setCurrentDelivery(order.packages))
+            dispatch(setDeliveryId(order._id))
         }
     }
-
-    const questions = [
-        '¿Ha consumido bebidas alcohólicas en las últimas 12 horas?',
-        '¿Usted está haciendo uso de algún tipo de medicamento psicoactivo?',
-        '¿Tiene usted algún problema familiar, emocional o de cualquier tipo que lo distraiga? ',
-    ]
 
     return (
         <BgLayout>
             <LayoutContainer title={'Declaración Jurada'} backUrl={'/login'}>
                 <div className="flex flex-col gap-4 px-4 mt-4 mb-4">
-                    {questions.map((question, index) => (
-                        <div
-                            className="border-2 rounded-lg py-4 px-4"
-                            key={index}
-                        >
-                            <p className="text-center mb-4">{question}</p>
-                            <div className="flex gap-4 justify-center">
-                                <button
-                                    onClick={() => {
-                                        handleClick(index)
-                                    }}
-                                    className={`w-24 border rounded-full border-secondary px-8 py-1 cursor-pointer ${
-                                        selectedButtons[index]
-                                            ? 'bg-gray-300'
-                                            : ''
-                                    }`}
-                                >
-                                    Sí
-                                </button>
-                                <button className="w-24 border rounded-full border-secondary px-8 py-1 cursor-pointer">
-                                    No
-                                </button>
-                            </div>
-                        </div>
-                    ))}
+                    <Question index={0} handleClick={handleClick} />
+                    <Question index={1} handleClick={handleClick} />
+                    <Question index={2} handleClick={handleClick} />
 
                     <Button
                         type="button"
                         onClick={handleContinue}
-                        disabled={!selectedButtons.every((val) => val)}
+                        disabled={!canContinue}
+                        customStyle={`${
+                            canContinue
+                                ? 'bg-secondary text-white font-bold'
+                                : 'black-button'
+                        } py-2 px-4 rounded`}
                     >
                         Continuar
                     </Button>
