@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { cancelOrder } from 'services/cancelOrder'
 import { editPackage } from 'services/editPackage'
 import { removePackage } from 'store/slices/currentDeliverySlice'
+import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
 import { type RootState } from 'store/store'
 import Swal from 'sweetalert2'
 
@@ -46,10 +47,9 @@ const PackageCard: FC<PackageCardProps> = ({
                 await editPackage({ status: 'pending' }, packageData._id)
                 dispatch(removePackage(packageData._id))
                 if (currentDelivery.packages.length === 0) {
-                    const cancelledOrder = await cancelOrder(
-                        currentDelivery._id
-                    )
+                    await cancelOrder(currentDelivery._id)
                 }
+                dispatch(setSelectedPackages([]))
             }
         } catch (error) {
             console.error('handleDeletePackage error', error)

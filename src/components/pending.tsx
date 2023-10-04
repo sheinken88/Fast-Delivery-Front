@@ -19,7 +19,9 @@ export const Pending: FC<PendingProps> = ({ packages }) => {
                 className="flex justify-between items-center font-bold text-primary mb-4 cursor-pointer"
                 onClick={toggleVisibility}
             >
-                <h2 className="text-lg">Repartos pendientes</h2>
+                <h2 className="text-lg">{`Repartos disponibles (${
+                    packages.length ?? 0
+                })`}</h2>
                 {packages[0] !== null && (
                     <IconContext.Provider
                         value={{
