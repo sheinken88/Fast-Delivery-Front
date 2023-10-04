@@ -6,8 +6,6 @@ export const fetchDriverDeliveredPackages = async (driverId: string) => {
             const packages = await axiosInstance.get(
                 `/orders/delivered/${driverId}`
             )
-            console.log('packages', packages.data)
-
             return packages.data
         }
     } catch (error) {
