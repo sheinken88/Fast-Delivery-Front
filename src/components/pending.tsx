@@ -35,7 +35,7 @@ export const Pending: FC<PendingProps> = ({ packages }) => {
                 <div>
                     {packages[0] !== null ? (
                         <div className="flex flex-col gap-4">
-                            {packages.map((pkg) => (
+                            {packages?.map((pkg) => (
                                 <PackageCard
                                     key={pkg._id}
                                     packageData={pkg}

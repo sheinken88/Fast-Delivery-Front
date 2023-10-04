@@ -34,11 +34,11 @@ export const History: FC<DeliveredProps> = ({ packages }) => {
                 </IconContext.Provider>
             </div>
             <p className="text-primary text-sm mb-2">
-                {packages.length} paquetes entregados
+                {packages.length ?? 0} Paquetes Entregados
             </p>
             {isVisible && (
                 <div className="flex flex-col gap-4">
-                    {packages.map((pkg) => (
+                    {packages?.map((pkg) => (
                         <PackageCard
                             key={pkg._id}
                             packageData={pkg}
