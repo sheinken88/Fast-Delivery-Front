@@ -1,11 +1,11 @@
 'use client'
 import React from 'react'
-import { FaUserAlt, FaTasks, FaMapMarked } from 'react-icons/fa'
+import { FaHistory, FaTasks, FaMapMarked } from 'react-icons/fa'
 import { PiPackageLight } from 'react-icons/pi'
 import type MenuProps from '../../interfaces/props/menuProps.interface'
 
 const iconMap = {
-    FaUserAlt: <FaUserAlt size={24} />,
+    FaHistory: <FaHistory size={24} />,
     FaTasks: <FaTasks size={24} />,
     PiPackageLight: <PiPackageLight size={30} />,
     FaMapMarked: <FaMapMarked size={24} />,

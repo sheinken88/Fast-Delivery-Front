@@ -13,7 +13,7 @@ import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2'
 import { addToDelivery } from 'services/addToDelivery'
-import { editPackage } from 'services/editPackage'
+// import { editPackage } from 'services/editPackage'
 
 export default function Packages() {
     const router = useRouter()

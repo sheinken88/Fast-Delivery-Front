@@ -19,7 +19,9 @@ export const Pending: FC<PendingProps> = ({ packages }) => {
                 className="flex justify-between items-center font-bold text-primary mb-4 cursor-pointer"
                 onClick={toggleVisibility}
             >
-                <h2 className="text-lg">Repartos pendientes</h2>
+                <h2 className="text-lg">{`Repartos disponibles (${
+                    packages.length ?? 0
+                })`}</h2>
                 {packages[0] !== null && (
                     <IconContext.Provider
                         value={{
@@ -35,7 +37,7 @@ export const Pending: FC<PendingProps> = ({ packages }) => {
                 <div>
                     {packages[0] !== null ? (
                         <div className="flex flex-col gap-4">
-                            {packages.map((pkg) => (
+                            {packages?.map((pkg) => (
                                 <PackageCard
                                     key={pkg._id}
                                     packageData={pkg}
