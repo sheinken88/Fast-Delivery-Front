@@ -1,9 +1,10 @@
 import axios from 'axios'
-import axiosInstance from '../../interfaces/axiosInstance'
+
+const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8080'
 
 export const signup = async (data: object) => {
     try {
-        const newDriver = await axiosInstance.post('/drivers/signup', data)
+        const newDriver = await axios.post(`${apiUrl}/drivers/signup`, data)
         return newDriver.data
     } catch (error) {
         console.error('signup service error', error)
