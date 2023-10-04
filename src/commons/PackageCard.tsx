@@ -49,7 +49,6 @@ const PackageCard: FC<PackageCardProps> = ({
                     const cancelledOrder = await cancelOrder(
                         currentDelivery._id
                     )
-                    console.log('cancelledOrder', cancelledOrder)
                 }
             }
         } catch (error) {
