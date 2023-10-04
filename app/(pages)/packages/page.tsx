@@ -30,6 +30,7 @@ export default function Packages() {
     const fetchPackages = async () => {
         const packages = await fetchPendingPackages()
         dispatch(setPackages(packages))
+        dispatch(setSelectedPackages([]))
     }
 
     const handleSelect = (packageInfo: IPackage, isSelected: boolean): void => {
