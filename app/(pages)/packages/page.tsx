@@ -30,6 +30,7 @@ export default function Packages() {
     const fetchPackages = async () => {
         const packages = await fetchPendingPackages()
         dispatch(setPackages(packages))
+        dispatch(setSelectedPackages([]))
     }
 
     const handleSelect = (packageInfo: IPackage, isSelected: boolean): void => {
@@ -73,17 +74,15 @@ export default function Packages() {
     }, [dispatch])
 
     useEffect(() => {
-        if (selectedPackages.length > 0) setCanContinue(true)
+        if (selectedPackages.length > 0 && currentDelivery.packages.length <= 0)
+            setCanContinue(true)
         else setCanContinue(false)
     }, [handleSelect])
 
     return (
         <BgLayout>
             <div className="text-center">
-                <LayoutContainer
-                    title={'Obtener paquetes'}
-                    backUrl={'/start-shift'}
-                >
+                <LayoutContainer title={'Obtener paquetes'} backUrl={'/home'}>
                     <div className="border-b-primary border-b border-dotted text-xs font-poppins p-2">
                         ¿Cuántos paquetes repartirás hoy?
                     </div>
@@ -103,29 +102,16 @@ export default function Packages() {
                         ))}
                     </div>
                 </LayoutContainer>
-                {currentDelivery.packages.length <= 0 ? (
-                    <Button
-                        onClick={handleContinue}
-                        type="button"
-                        customStyle={`mt-4 mx-auto block ${
-                            !canContinue ? 'black-button' : ''
-                        }`}
-                        disabled={!canContinue}
-                    >
-                        Iniciar Jornada
-                    </Button>
-                ) : (
-                    <Button
-                        onClick={handleAddToDelivery}
-                        type="button"
-                        customStyle={`mt-4 mx-auto block ${
-                            !canContinue ? 'black-button' : ''
-                        }`}
-                        disabled={!canContinue}
-                    >
-                        Agregar al pedido
-                    </Button>
-                )}
+                <Button
+                    onClick={handleContinue}
+                    type="button"
+                    customStyle={`mt-4 mx-auto block ${
+                        !canContinue ? 'black-button' : ''
+                    }`}
+                    disabled={!canContinue}
+                >
+                    Iniciar Jornada
+                </Button>
             </div>
         </BgLayout>
     )
