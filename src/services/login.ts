@@ -1,9 +1,12 @@
-import axiosInstance from '../../interfaces/axiosInstance'
+import axios from 'axios'
 
 export const login = async (email: string, password: string) => {
     try {
-        const response = await axiosInstance.post(
-            '/drivers/login',
+        const apiUrl =
+            process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8080'
+
+        const response = await axios.post(
+            `${apiUrl}/drivers/login`,
             {
                 email,
                 password,
