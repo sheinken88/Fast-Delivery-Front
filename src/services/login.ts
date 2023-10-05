@@ -1,4 +1,3 @@
-import axios from 'axios'
 import axiosInstance from '../../interfaces/axiosInstance'
 
 export const login = async (email: string, password: string) => {
