@@ -23,6 +23,11 @@ body {
     color: grey;
 }
 
+.red-button {
+    background-color: rgb(230, 57, 57);
+    color: white;
+}
+
 .leaflet-routing-container {
     display: none !important;
 }

@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation'
 import { Question } from 'components/question'
 import { useDispatch, useSelector } from 'react-redux'
 import { type RootState } from 'store/store'
-import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
 import {
     setCurrentDelivery,
     setDeliveryId,
