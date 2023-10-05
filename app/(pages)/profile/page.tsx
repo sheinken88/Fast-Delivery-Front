@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from 'store/store'
 import { BgLayout } from '../../bgLayout'
 import LayoutContainer from '../../../app/layoutContainer'
@@ -10,6 +10,7 @@ import useInput from 'hooks/useInput'
 import { updateUserProfile } from '../../../src/services/updateUserProfile'
 import EditableInput from 'commons/generic/EditableInput'
 import ImageUploader from 'components/ImageUploader'
+import { setCurrentUser } from 'store/slices/userSlice'
 
 export interface FormValues {
     username: string | undefined
@@ -18,6 +19,7 @@ export interface FormValues {
 }
 
 const Profile: React.FC = () => {
+    const dispatch = useDispatch()
     const user = useSelector((state: RootState) => state.users.currentUser)
     const username = useInput(
         typeof user?.username === 'string' ? user.username : ''
@@ -49,15 +51,12 @@ const Profile: React.FC = () => {
                     if (res.ok) return await res.json()
                 })
                 .then(async (data) => {
-                    console.log('picture', data.url)
-                    console.log('username', username.value)
-                    console.log('email', email.value)
-
-                    await updateUserProfile(user?._id, {
+                    const profileUpdated = await updateUserProfile(user?._id, {
                         profile_pic: data.url,
                         username: username.value,
                         email: email.value,
                     })
+                    dispatch(setCurrentUser(profileUpdated))
                 })
                 .then(async () => {
                     changeEditing()
@@ -66,6 +65,9 @@ const Profile: React.FC = () => {
                         text: 'Subida correctamente',
                         confirmButtonText: 'Genial!',
                     })
+                })
+                .catch((error) => {
+                    console.error('profile update error', error)
                 })
         }
     }
