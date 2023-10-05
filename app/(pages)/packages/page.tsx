@@ -11,8 +11,7 @@ import { fetchPendingPackages } from 'services/fetchPendingPackages'
 import type IPackage from '../../../interfaces/package.interface'
 import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
 import { useRouter } from 'next/navigation'
-import Swal from 'sweetalert2'
-import { addToDelivery } from 'services/addToDelivery'
+// import { addToDelivery } from 'services/addToDelivery'
 // import { editPackage } from 'services/editPackage'
 
 export default function Packages() {
@@ -50,24 +49,24 @@ export default function Packages() {
         router.push('/statement')
     }
 
-    const handleAddToDelivery = async () => {
-        try {
-            const result = await Swal.fire({
-                text: '¿Deseas agregarlos al pedido actual?',
-                icon: 'question',
-                confirmButtonText: 'Sí',
-                cancelButtonText: 'No',
-                showCancelButton: true,
-                confirmButtonColor: '#00EA77',
-                cancelButtonColor: '#3D1DF3',
-            })
-            if (result.isConfirmed)
-                await addToDelivery(currentDelivery._id, selectedPackages)
-            router.push('/statement')
-        } catch (error) {
-            console.error('handleAddToDelivery error', error)
-        }
-    }
+    // const handleAddToDelivery = async () => {
+    //     try {
+    //         const result = await Swal.fire({
+    //             text: '¿Deseas agregarlos al pedido actual?',
+    //             icon: 'question',
+    //             confirmButtonText: 'Sí',
+    //             cancelButtonText: 'No',
+    //             showCancelButton: true,
+    //             confirmButtonColor: '#00EA77',
+    //             cancelButtonColor: '#3D1DF3',
+    //         })
+    //         if (result.isConfirmed)
+    //             await addToDelivery(currentDelivery._id, selectedPackages)
+    //         router.push('/statement')
+    //     } catch (error) {
+    //         console.error('handleAddToDelivery error', error)
+    //     }
+    // }
 
     useEffect(() => {
         void fetchPackages()

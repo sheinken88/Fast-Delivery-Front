@@ -74,6 +74,7 @@ export const BgLayout: React.FC<BgLayoutProps> = ({ children }) => {
     useEffect(() => {
         const token = localStorage.getItem('user')
         if (token !== null && user === null) void fetchUserByToken()
+        console.log('user', user)
     }, [])
 
     useEffect(() => {
