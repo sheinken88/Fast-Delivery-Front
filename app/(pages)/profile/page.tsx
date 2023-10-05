@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { useSelector } from 'react-redux'
 import type { RootState } from 'store/store'
@@ -37,6 +37,7 @@ const Profile: React.FC = () => {
             data.append('upload_preset', 'hy4lupmz')
             data.append('cloud_name', 'db3pcwsrm')
             const folder = 'fast-delivery/profile_pictures/admins'
+
             void fetch(
                 `https://api.cloudinary.com/v1_1/db3pcwsrm/image/upload?folder=${folder}`,
                 {
@@ -47,12 +48,17 @@ const Profile: React.FC = () => {
                 .then(async (res) => {
                     if (res.ok) return await res.json()
                 })
-                .then(
-                    async (data) =>
-                        await updateUserProfile(user?._id, {
-                            profile_pic: data.url,
-                        })
-                )
+                .then(async (data) => {
+                    console.log('picture', data.url)
+                    console.log('username', username.value)
+                    console.log('email', email.value)
+
+                    await updateUserProfile(user?._id, {
+                        profile_pic: data.url,
+                        username: username.value,
+                        email: email.value,
+                    })
+                })
                 .then(async () => {
                     changeEditing()
                     await Swal.fire({
@@ -63,6 +69,8 @@ const Profile: React.FC = () => {
                 })
         }
     }
+
+    useEffect(() => {}, [isEditing])
 
     return (
         <BgLayout>

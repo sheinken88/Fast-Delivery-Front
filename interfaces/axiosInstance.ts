@@ -6,8 +6,6 @@ if (typeof window !== 'undefined') {
     token = localStorage.getItem('user')
 }
 
-console.log('API_URL:', process.env.API_URL)
-
 const axiosInstance: AxiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     timeout: 5000,

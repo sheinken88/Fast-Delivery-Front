@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { BgLayout } from '../../bgLayout'
 import Image from 'next/image'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from 'store/store'
 import { MenuBoxComponent } from 'components/menuBox'
 import Link from 'next/link'
@@ -10,8 +10,11 @@ import type IPackage from '../../../interfaces/package.interface'
 import { CurrentPackages } from 'components/currentPackages'
 import { useRouter } from 'next/navigation'
 import { BsArrowRight } from 'react-icons/bs'
+import { persistence } from 'services/persistence'
+import { setCurrentUser } from 'store/slices/userSlice'
 
 const Home: React.FC = () => {
+    const dispatch = useDispatch()
     const router = useRouter()
     const [isEnabled, setIsEnabled] = useState(false)
     const [pendingPackages, setPendingPackages] = useState<IPackage[]>([])
@@ -25,6 +28,14 @@ const Home: React.FC = () => {
         else setIsEnabled(false)
         setPendingPackages(currentDelivery.packages)
     }, [currentDelivery])
+
+    const fetchUser = async () => {
+        dispatch(setCurrentUser(await persistence()))
+    }
+
+    useEffect(() => {
+        void fetchUser()
+    }, [])
 
     return (
         <BgLayout>
