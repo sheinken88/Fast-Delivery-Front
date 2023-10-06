@@ -11,6 +11,9 @@ import { updateUserProfile } from '../../../src/services/updateUserProfile'
 import EditableInput from 'commons/generic/EditableInput'
 import ImageUploader from 'components/ImageUploader'
 import { setCurrentUser } from 'store/slices/userSlice'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export interface FormValues {
     username: string | undefined
@@ -35,40 +38,46 @@ const Profile: React.FC = () => {
     const handleSubmit = async () => {
         if (user && selectedImage) {
             const data = new FormData()
+            const folder = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER
+            const cloudinary_url = process.env.NEXT_PUBLIC_CLOUDINARY
+            const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET
+            const cloudName = process.env.NEXT_PUBLIC_CLOUD_NAME
             data.append('file', selectedImage)
-            data.append('upload_preset', 'hy4lupmz')
-            data.append('cloud_name', 'db3pcwsrm')
-            const folder = 'fast-delivery/profile_pictures/admins'
 
-            void fetch(
-                `https://api.cloudinary.com/v1_1/db3pcwsrm/image/upload?folder=${folder}`,
-                {
+            if (uploadPreset && cloudName && cloudinary_url && folder) {
+                data.append('upload_preset', uploadPreset)
+                data.append('cloud_name', cloudName)
+
+                void fetch(`${cloudinary_url}${folder}`, {
                     method: 'post',
                     body: data,
-                }
-            )
-                .then(async (res) => {
-                    if (res.ok) return await res.json()
                 })
-                .then(async (data) => {
-                    const profileUpdated = await updateUserProfile(user?._id, {
-                        profile_pic: data.url,
-                        username: username.value,
-                        email: email.value,
+                    .then(async (res) => {
+                        if (res.ok) return await res.json()
                     })
-                    dispatch(setCurrentUser(profileUpdated))
-                })
-                .then(async () => {
-                    changeEditing()
-                    await Swal.fire({
-                        icon: 'success',
-                        text: 'Subida correctamente',
-                        confirmButtonText: 'Genial!',
+                    .then(async (data) => {
+                        const profileUpdated = await updateUserProfile(
+                            user?._id,
+                            {
+                                profile_pic: data.url,
+                                username: username.value,
+                                email: email.value,
+                            }
+                        )
+                        dispatch(setCurrentUser(profileUpdated))
                     })
-                })
-                .catch((error) => {
-                    console.error('profile update error', error)
-                })
+                    .then(async () => {
+                        changeEditing()
+                        await Swal.fire({
+                            icon: 'success',
+                            text: 'Subida correctamente',
+                            confirmButtonText: 'Genial!',
+                        })
+                    })
+                    .catch((error) => {
+                        console.error('profile update error', error)
+                    })
+            }
         }
     }
 
