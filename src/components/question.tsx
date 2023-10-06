@@ -12,13 +12,13 @@ export const Question: React.FC<QuestionProps> = ({ index, handleClick }) => {
     ]
 
     const handleNo = () => {
-        handleClick(index, true)
+        handleClick(index, false)
         setNoIselected(true)
         setYesIsSelected(false)
     }
 
     const handleYes = () => {
-        handleClick(index, false)
+        handleClick(index, true)
         setYesIsSelected(true)
         setNoIselected(false)
     }

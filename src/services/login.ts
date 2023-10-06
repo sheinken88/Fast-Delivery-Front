@@ -4,7 +4,6 @@ export const login = async (email: string, password: string) => {
     try {
         const apiUrl =
             process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8080'
-        console.log('Api URL:', apiUrl)
 
         const response = await axios.post(
             `${apiUrl}/drivers/login`,

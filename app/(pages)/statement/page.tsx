@@ -13,6 +13,7 @@ import {
 } from 'store/slices/currentDeliverySlice'
 import { createOrder } from 'services/createOrder'
 import { editPackage } from 'services/editPackage'
+import { createStatement } from 'services/createStatement'
 
 const Statement: React.FC = () => {
     const router = useRouter()
@@ -22,9 +23,9 @@ const Statement: React.FC = () => {
     )
 
     const [selectedButtons, setSelectedButtons] = useState<boolean[]>([
-        false,
-        false,
-        false,
+        true,
+        true,
+        true,
     ])
 
     const [canContinue, setCanContinue] = useState(false)
@@ -32,10 +33,10 @@ const Statement: React.FC = () => {
     const handleClick = (index: number, isNo: boolean): void => {
         setSelectedButtons((prevSelectedButtons) => {
             const newSelectedButtons = [...prevSelectedButtons]
-            if (isNo) newSelectedButtons[index] = true
-            if (!isNo) newSelectedButtons[index] = false
+            if (isNo) newSelectedButtons[index] = false
+            if (!isNo) newSelectedButtons[index] = true
+            if (newSelectedButtons.includes(true)) setCanContinue(false)
             if (!newSelectedButtons.includes(false)) setCanContinue(true)
-            if (newSelectedButtons.includes(false)) setCanContinue(false)
 
             return newSelectedButtons
         })
@@ -43,6 +44,11 @@ const Statement: React.FC = () => {
 
     const handleContinue = async (): Promise<void> => {
         if (selectedButtons.every((val) => val)) {
+            await createStatement(
+                selectedButtons[0],
+                selectedButtons[1],
+                selectedButtons[2]
+            )
             const order = await createOrder(selectedPackages)
             if (order !== null) router.push('/current-delivery')
             for (const p of order.packages) {
