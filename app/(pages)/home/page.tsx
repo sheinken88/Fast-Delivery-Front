@@ -40,7 +40,11 @@ const Home: React.FC = () => {
                         height={56}
                         width={56}
                         alt="Profile Picture"
-                        src={user?.profile_pic ?? '/empty_profile_pic.jpg'}
+                        src={
+                            user?.profile_pic
+                                ? user?.profile_pic
+                                : 'https://res.cloudinary.com/db3pcwsrm/image/upload/v1696036778/fast-delivery/assets/generic_profile_pic.png'
+                        }
                     />
                     <div className="ml-4">
                         <p className="font-bold text-lg">
