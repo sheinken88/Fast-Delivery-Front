@@ -11,14 +11,16 @@ import { fetchPendingPackages } from 'services/fetchPendingPackages'
 import type IPackage from '../../../interfaces/package.interface'
 import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
 import { useRouter } from 'next/navigation'
-// import { addToDelivery } from 'services/addToDelivery'
-// import { editPackage } from 'services/editPackage'
+import { completedDay } from 'services/completedDay'
+import Swal from 'sweetalert2'
 
 export default function Packages() {
     const router = useRouter()
     const dispatch = useDispatch()
     const [canContinue, setCanContinue] = useState(false)
+    const [totalPackages, setTotalPackages] = useState(0)
     const packages = useSelector((state: RootState) => state.packages.packages)
+    const driver = useSelector((state: RootState) => state.users.currentUser)
     const selectedPackages = useSelector(
         (state: RootState) => state.selectedPackages.packages
     )
@@ -49,31 +51,38 @@ export default function Packages() {
         router.push('/statement')
     }
 
-    // const handleAddToDelivery = async () => {
-    //     try {
-    //         const result = await Swal.fire({
-    //             text: '¿Deseas agregarlos al pedido actual?',
-    //             icon: 'question',
-    //             confirmButtonText: 'Sí',
-    //             cancelButtonText: 'No',
-    //             showCancelButton: true,
-    //             confirmButtonColor: '#00EA77',
-    //             cancelButtonColor: '#3D1DF3',
-    //         })
-    //         if (result.isConfirmed)
-    //             await addToDelivery(currentDelivery._id, selectedPackages)
-    //         router.push('/statement')
-    //     } catch (error) {
-    //         console.error('handleAddToDelivery error', error)
-    //     }
-    // }
+    const fetchCompletedDay = async () => {
+        try {
+            if (driver !== null) {
+                const isCompleted = await completedDay(driver._id)
+
+                if (isCompleted.count >= 10) {
+                    await Swal.fire({
+                        text: 'Ya ocupaste tus 10 paquetes diarios, mañana podras entregar más. ¡Buen trabajo!',
+                        icon: 'success',
+                        confirmButtonText: 'Ok',
+                    })
+                    router.push('/home')
+                } else {
+                    setTotalPackages(isCompleted.count)
+                }
+            }
+        } catch (error) {
+            console.error('fetchCompletedDay error')
+        }
+    }
 
     useEffect(() => {
+        void fetchCompletedDay()
         void fetchPackages()
-    }, [dispatch])
+    }, [])
 
     useEffect(() => {
-        if (selectedPackages.length > 0 && currentDelivery.packages.length <= 0)
+        if (
+            selectedPackages.length > 0 &&
+            currentDelivery.packages.length <= 0 &&
+            selectedPackages.length + totalPackages <= 10
+        )
             setCanContinue(true)
         else setCanContinue(false)
     }, [handleSelect])
@@ -84,8 +93,16 @@ export default function Packages() {
                 <LayoutContainer title={'Obtener paquetes'} backUrl={'/home'}>
                     <div className="border-b-primary border-b border-dotted text-xs font-poppins p-2">
                         ¿Cuántos paquetes repartirás hoy?
+                        <p>
+                            recuerda que solo puedes repartir un máximo de 10
+                            paquetes diarios
+                        </p>
+                        <p>¡Mucha suerte!</p>
                     </div>
                     <br />
+                    <p className="mb-4">
+                        Paquetes restantes por entregar: {10 - totalPackages}
+                    </p>
                     <div className="flex flex-col gap-2 p-2 rounded-lg">
                         {packages.map((packageInfo, index) => (
                             <PackageSelect
