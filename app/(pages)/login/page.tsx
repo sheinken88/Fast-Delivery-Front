@@ -32,11 +32,18 @@ const Login = () => {
         e.preventDefault()
         try {
             const user = await login(email.value, password.value)
-            if (user !== null && user !== undefined) {
+            if (user.status) {
                 dispatch(setCurrentUser(user))
                 router.push('/home')
+            } else if (user.username) {
+                return await Swal.fire({
+                    text: `Hola ${
+                        user.username.split(' ')[0]
+                    }, lamentamos informarte que tu cuenta ha sido inhabilitada. Por cualquier consulta comunicate con nosotros via email. ¡Buena Suerte!`,
+                    icon: 'error',
+                })
             } else {
-                await Swal.fire({
+                return await Swal.fire({
                     text: 'Email y/o contraseña incorrectos',
                     icon: 'error',
                 })
