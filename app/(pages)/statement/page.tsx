@@ -61,7 +61,7 @@ const Statement: React.FC = () => {
 
     return (
         <BgLayout>
-            <LayoutContainer title={'Declaración Jurada'} backUrl={'/login'}>
+            <LayoutContainer title={'Declaración Jurada'} backUrl={'/packages'}>
                 <div className="flex flex-col gap-4 px-4 mt-4 mb-4">
                     <Question index={0} handleClick={handleClick} />
                     <Question index={1} handleClick={handleClick} />
