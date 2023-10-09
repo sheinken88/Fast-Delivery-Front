@@ -5,6 +5,7 @@ import { BiSolidDownArrow, BiSolidUpArrow } from 'react-icons/bi'
 import { IconContext } from 'react-icons'
 import PackageCard from 'commons/PackageCard'
 import type PendingProps from '../../interfaces/props/pendingProps.interface'
+import Tag from 'commons/Tag'
 
 export const CurrentPackages: FC<PendingProps> = ({ packages }) => {
     const [isVisible, setIsVisible] = useState(true)
