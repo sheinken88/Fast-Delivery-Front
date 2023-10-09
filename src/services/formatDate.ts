@@ -25,8 +25,10 @@ export const formatDateService = (date: Date) => {
 
     const diaSemana = diasSemana[date.getDay()]
     const diaMes = date.getDate()
-    const mes = meses[date.getMonth()]
     const año = date.getFullYear()
+    const mes = meses[date.getMonth()]
+    const hora = date.getHours()
+    const minutos = date.getMinutes()
 
-    return `${diaSemana} ${diaMes} de ${mes} de ${año}`
+    return `${diaSemana} ${diaMes} de ${mes} de ${año} a las ${hora}:${minutos}`
 }
