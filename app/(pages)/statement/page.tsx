@@ -54,7 +54,6 @@ const Statement: React.FC = () => {
             for (const p of order.packages) {
                 await editPackage({ status: 'in progress' }, p._id)
             }
-            // dispatch(setSelectedPackages([]))
             dispatch(setCurrentDelivery(order.packages))
             dispatch(setDeliveryId(order._id))
         }
