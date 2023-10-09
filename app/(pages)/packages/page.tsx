@@ -13,6 +13,9 @@ import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
 import { useRouter } from 'next/navigation'
 import { completedDay } from 'services/completedDay'
 import Swal from 'sweetalert2'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 export default function Packages() {
     const router = useRouter()
@@ -27,6 +30,17 @@ export default function Packages() {
     const currentDelivery = useSelector(
         (state: RootState) => state.currentDelivery
     )
+
+    const sliderSettings = {
+        arrows: false,
+        dots: true,
+        infinite: false,
+        slidesToShow: 6,
+        slidesToScroll: 6,
+        vertical: true,
+        verticalSwiping: true,
+        // touchMove: false, sirve para que no se mueva el slider al deslizar
+    }
 
     const fetchPackages = async () => {
         const packages = await fetchPendingPackages()
@@ -104,18 +118,21 @@ export default function Packages() {
                         Paquetes restantes por entregar: {10 - totalPackages}
                     </p>
                     <div className="flex flex-col gap-2 p-2 rounded-lg">
-                        {packages.map((packageInfo, index) => (
-                            <PackageSelect
-                                key={index}
-                                packageInfo={packageInfo}
-                                order={
-                                    selectedPackages.indexOf(packageInfo) + 1
-                                }
-                                onSelect={(isSelected) => {
-                                    handleSelect(packageInfo, isSelected)
-                                }}
-                            />
-                        ))}
+                        <Slider className="mb-8 max-h-96" {...sliderSettings}>
+                            {packages.map((packageInfo, index) => (
+                                <PackageSelect
+                                    key={index}
+                                    packageInfo={packageInfo}
+                                    order={
+                                        selectedPackages.indexOf(packageInfo) +
+                                        1
+                                    }
+                                    onSelect={(isSelected) => {
+                                        handleSelect(packageInfo, isSelected)
+                                    }}
+                                />
+                            ))}
+                        </Slider>
                     </div>
                 </LayoutContainer>
                 <Button

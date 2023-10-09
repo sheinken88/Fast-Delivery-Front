@@ -42,13 +42,12 @@ const Login = () => {
                     }, lamentamos informarte que tu cuenta ha sido inhabilitada. Por cualquier consulta comunicate con nosotros via email. ¡Buena Suerte!`,
                     icon: 'error',
                 })
-            } else {
-                return await Swal.fire({
-                    text: 'Email y/o contraseña incorrectos',
-                    icon: 'error',
-                })
             }
         } catch (error) {
+            await Swal.fire({
+                text: 'Email y/o contraseña incorrectos',
+                icon: 'error',
+            })
             console.error('handleLogin error', error)
         }
     }
