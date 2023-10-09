@@ -35,8 +35,8 @@ export default function Packages() {
         arrows: false,
         dots: true,
         infinite: false,
-        slidesToShow: 6,
-        slidesToScroll: 6,
+        slidesToShow: 5,
+        slidesToScroll: 5,
         vertical: true,
         verticalSwiping: true,
         // touchMove: false, sirve para que no se mueva el slider al deslizar
@@ -118,7 +118,7 @@ export default function Packages() {
                         Paquetes restantes por entregar: {10 - totalPackages}
                     </p>
                     <div className="flex flex-col gap-2 p-2 rounded-lg">
-                        <Slider className="mb-8 max-h-96" {...sliderSettings}>
+                        <Slider className="mb-8" {...sliderSettings}>
                             {packages.map((packageInfo, index) => (
                                 <PackageSelect
                                     key={index}
