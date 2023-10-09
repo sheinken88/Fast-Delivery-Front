@@ -10,6 +10,7 @@ import { removePackage } from 'store/slices/currentDeliverySlice'
 import { setSelectedPackages } from 'store/slices/selectedPackageSlice'
 import { type RootState } from 'store/store'
 import Swal from 'sweetalert2'
+import Tag from './Tag'
 
 interface Package {
     _id: string
@@ -55,6 +56,7 @@ const PackageCard: FC<PackageCardProps> = ({
             console.error('handleDeletePackage error', error)
         }
     }
+
     return (
         <div
             key={packageData._id}
@@ -72,7 +74,7 @@ const PackageCard: FC<PackageCardProps> = ({
             </div>
             <div id="info pkg" className="flex flex-col w-full">
                 <div className="flex justify-between text-primary font-bold text-xs">
-                    <p>
+                    <span className="mt-4">
                         #
                         {packageData._id
                             .toUpperCase()
@@ -80,7 +82,11 @@ const PackageCard: FC<PackageCardProps> = ({
                                 packageData._id.length - 5,
                                 packageData._id.length
                             )}
-                    </p>
+                    </span>
+                    <div className="py-2">
+                        <Tag status={packageData.status} />
+                    </div>
+
                     {packageData.status === 'en curso' ? (
                         <p className="bg-customYellow px-3 rounded-full">
                             EN CURSO
