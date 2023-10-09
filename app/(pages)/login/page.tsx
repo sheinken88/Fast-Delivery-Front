@@ -122,9 +122,9 @@ const Login = () => {
                             Crear cuenta
                         </button>
                     </Link>
-                    <a href="" className="text-white font-extralight mt-4">
+                    {/* <a href="" className="text-white font-extralight mt-4">
                         OLVIDÉ MI CONTRASEÑA
-                    </a>
+                    </a> */}
                 </div>
             </form>
         </main>
