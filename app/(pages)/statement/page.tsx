@@ -23,9 +23,9 @@ const Statement: React.FC = () => {
     )
 
     const [selectedButtons, setSelectedButtons] = useState<boolean[]>([
-        true,
-        true,
-        true,
+        false,
+        false,
+        false,
     ])
 
     const [canContinue, setCanContinue] = useState(false)

@@ -15,12 +15,13 @@ export const createStatement = async (
 ) => {
     try {
         const date = new Date()
+        const day = formatDateService(date)
         const token = localStorage.getItem('user')
         const sentStatement: IStatement = {
             consumedAlcohol: q1,
             usingPsychoactiveMedication: q2,
             havingEmotionalIssues: q3,
-            date: formatDateService(date),
+            date: day,
         }
         const createdStatement = await axiosInstance.post(
             '/statements/create',
